@@ -75,7 +75,7 @@ void Bounded_Dequeue<DQ>::push_front(DQ element)
     }
     else
     {
-         throw std::runtime_error( "Bounded_Queue<E>.enqueue(): full queue" );
+         throw std::runtime_error( "full queue" );
     }
 }
 
@@ -89,7 +89,7 @@ void Bounded_Dequeue<DQ>::push_back(DQ element)
     }
     else
     {
-        throw std::runtime_error( "Bounded_Queue<E>.enqueue(): full queue" );
+        throw std::runtime_error( "full queue" );
     }
 
 }
@@ -104,7 +104,7 @@ DQ Bounded_Dequeue<DQ>::pop_front(void)
     }
     else
     {
-        throw std::runtime_error( "Bounded_Queue<E>.dequeue(): empty queue" );
+        throw std::runtime_error( "empty queue" );
     }
     return data[popped];
 }
@@ -120,7 +120,7 @@ DQ Bounded_Dequeue<DQ>::pop_back(void)
     }
     else
     {
-        throw std::runtime_error( "Bounded_Queue<E>.dequeue(): empty queue" );
+        throw std::runtime_error( "empty queue" );
     }
     return data[popped];
 }
@@ -148,7 +148,6 @@ bool Bounded_Dequeue<DQ>::is_full(void)
 {
     //check this
     bool fullness = (head == next(tail));
-    fullness = fullness || tail == prev(head);
     // if(head > tail)
     // {
     //     fullness = ++tail == head;
@@ -232,16 +231,6 @@ void Bounded_Dequeue<DQ>::print_dequeue(void)
         head = next(head);
     }
     std::cout << "\nEnd of dequeue" << std::endl;
-
-    // for(int i = 0; i < capacity; ++i)
-    // {
-    //     if(head == tail)
-    //     {
-    //
-    //         return;
-    //     }
-    //
-    // }
 
     head = store_H;
     tail = store_T;

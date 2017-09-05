@@ -2,7 +2,7 @@
 //  main.cpp
 //  Exercise1
 //
-//  Created by Daniela Isabel Travieso on 9/3/17.
+//  Created by Daniela Isabel Travieso on 9/1/17.
 //  Copyright © 2017 Daniela Isabel Travieso. All rights reserved.
 //
 /*
