@@ -22,50 +22,65 @@ int main()
 {
     int length = 0;
     int end = 0;
+    int index = 0;
+    int array[1001];
+    bool result = true;
+    int car = 0;
 
-    do
+    std::cin >> end;
+
+    //checks for when reaching the end
+    while (end != 0)
     {
-
-        //checks for when reaching the end
-        if(end == 0)
-        {
-            break;
-        }
-        else
-        {
-            length = end;
-            continue;
-        }
-
-
-        //algorithm begins
-
-        //create an array, a correct array to compare to, a stack, and boolean for final result
-        int array[length];
-        int compare[length];
+        /*
+        reseting variables and creating the stack
+        */
+        length = end;
         std::stack<int> s;
-        bool result = false;
-        int car = 0;
+        result = true;
+        car = 0;
+        index = 0;
 
-        //populate the array with the car and the correct array with a correct value
-        for(int i = 1; i <= length; ++i)
+        for(int i = 0; i < length; ++i)
         {
+            //inputs car
             std::cin >> car;
-            array[i] = car;
-            compare[i] = i;
+
+            //while there is something in the stack and while the topmost element is less than the input
+            while(s.size() && s.top() < car){
+                //push to the array (the right street)
+                array[index] = s.top();
+                //remove from stack
+                s.pop();
+                //increment array
+                ++index;
+
+                //this allows for the elements to continue iterating until all
+                //valid items are in the right street
+            }
+            //keep pushing until you reach valid stack of items
+            s.push(car);
+
+        }
+        //while there is something in the stack
+        while(s.size())
+        {
+            //pop the stack and append it to the array
+            array[index] = s.top();
+            s.pop();
+            index++;
         }
 
-        //this is where the algorithm would go if I had one
-
-        //checking if correct
-        for(int i = 1; i <= length; ++i)
+        //checking if the array is correct
+        for(int i=0; i < length; ++i)
         {
-            if(compare[i] != i)
+            if(array[i] > i+1)
             {
-                result = true;
+                result=false;
                 break;
             }
         }
+
         if (result)
         {
             std::cout << "yes" << std::endl;
@@ -75,7 +90,8 @@ int main()
             std::cout << "no" << std::endl;
         }
 
-    } while (end != 0);
+        std::cin >> end;
+    }
 
     return 0;
 }
