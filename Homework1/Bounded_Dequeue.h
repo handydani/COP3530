@@ -68,28 +68,28 @@ Bounded_Dequeue<DQ>::Bounded_Dequeue(size_t cap) : capacity(cap + 1),
 template <typename DQ>
 void Bounded_Dequeue<DQ>::push_front(DQ element)
 {
-    if(!this->is_full())
+    if(!is_full())
     {
         head = prev(head);
         data[head] = element;
     }
     else
     {
-        throw std::runtime_error("Dequeue is full or unable to enqueue");
+         throw std::runtime_error( "Bounded_Queue<E>.enqueue(): full queue" );
     }
 }
 
 template <typename DQ>
 void Bounded_Dequeue<DQ>::push_back(DQ element)
 {
-    if(!this->is_full())
+    if(!is_full())
     {
         data[tail] = element;
         tail = next(tail);
     }
     else
     {
-        throw std::runtime_error("Dequeue is full or unable to enqueue");
+        throw std::runtime_error( "Bounded_Queue<E>.enqueue(): full queue" );
     }
 
 }
@@ -97,34 +97,32 @@ void Bounded_Dequeue<DQ>::push_back(DQ element)
 template <typename DQ>
 DQ Bounded_Dequeue<DQ>::pop_front(void)
 {
-    size_t popped = 0;
-    if(!this->is_empty())
+    size_t popped = head;
+    if(!is_empty())
     {
-        popped = data[head];
         head = next(head);
     }
     else
     {
-        throw std::runtime_error("Dequeue is full or unable to enqueue");
+        throw std::runtime_error( "Bounded_Queue<E>.dequeue(): empty queue" );
     }
-    return popped;
+    return data[popped];
 }
 
 template <typename DQ>
 DQ Bounded_Dequeue<DQ>::pop_back(void)
 {
-    size_t popped = 0;
+    size_t popped = --tail;
 
-    if(!this->is_empty())
+    if(!is_empty())
     {
-        popped = data[--tail];
         tail = prev(tail);
     }
     else
     {
-        throw std::runtime_error("Dequeue is full or unable to enqueue");
+        throw std::runtime_error( "Bounded_Queue<E>.dequeue(): empty queue" );
     }
-    return popped;
+    return data[popped];
 }
 
 template <typename DQ>
@@ -148,19 +146,21 @@ bool Bounded_Dequeue<DQ>::is_empty(void)
 template <typename DQ>
 bool Bounded_Dequeue<DQ>::is_full(void)
 {
-    bool fullness = false;
-    if(head > tail)
-    {
-        fullness = ++tail == head;
-    }
-    else if (head == tail)
-    {
-        fullness = false;
-    }
-    else
-    {
-        fullness = prev(head) == tail;
-    }
+    //check this
+    bool fullness = (head == next(tail));
+    fullness = fullness || tail == prev(head);
+    // if(head > tail)
+    // {
+    //     fullness = ++tail == head;
+    // }
+    // else if (head == tail)
+    // {
+    //     fullness = false;
+    // }
+    // else
+    // {
+    //     fullness = prev(head) == tail;
+    // }
 
     return fullness;
 }
@@ -171,11 +171,11 @@ size_t Bounded_Dequeue<DQ>::length(void)
     //test edge cases
     if( head > tail)
     {
-        return capacity - head + tail;
+        return ((capacity - head) + tail);
     }
     else
     {
-        return tail - head;
+        return (tail - head);
     }
 }
 
@@ -192,10 +192,6 @@ size_t Bounded_Dequeue<DQ>::next(size_t i)
     {
         i = 0;
     }
-    else
-    {
-        ++i;
-    }
     return i;
 }
 
@@ -206,11 +202,6 @@ size_t Bounded_Dequeue<DQ>::prev(size_t i)
     {
         i = capacity - 1;
     }
-    else
-    {
-        --i;
-    }
-
     return i;
 }
 // template <typename DQ>
@@ -235,20 +226,25 @@ void Bounded_Dequeue<DQ>::print_dequeue(void)
     size_t store_H = head;
     size_t store_T = tail;
 
-    for(int i = 0; i < capacity; ++i)
+    while (head != tail)
     {
-        if(head == tail)
-        {
-            std::cout << "\nEnd of dequeue" << std::endl;
-            return;
-        }
         std::cout << data[head] << " ";
         head = next(head);
     }
+    std::cout << "\nEnd of dequeue" << std::endl;
+
+    // for(int i = 0; i < capacity; ++i)
+    // {
+    //     if(head == tail)
+    //     {
+    //
+    //         return;
+    //     }
+    //
+    // }
 
     head = store_H;
     tail = store_T;
-
 }
 
 #endif /* bounded_dequeue_h */

@@ -47,7 +47,7 @@ int main()
     success = My_Dequeue0.is_empty(); //this feels more like a philosophical question,
                                       //is it empty if there's nothing able to be in there to begin with?
     std::cout << std::boolalpha << "Did it pass the empty test? "<< success << std::endl;
-    success = !My_Dequeue0.is_full();
+    success = My_Dequeue0.is_full();
     std::cout << std::boolalpha << "Did it pass the full test? "<< success << std::endl;
 
     My_Dequeue0.print_dequeue();
@@ -80,28 +80,69 @@ int main()
     std::cout << std::boolalpha << "Did it pass the full test? "<< success << std::endl;
 
     My_Dequeue2.push_back(1);
+
     My_Dequeue2.push_back(2);
+    std::cout << "checkpoint" <<std::endl;
 
     My_Dequeue2.print_dequeue();
 
-    // success = success && !My_Dequeue0.empty();
-    // success = success && !My_Dequeue0.empty();
-    // success = success && !My_Dequeue0.empty();
-
 
     //
+    std::cout << "\n~* Testing size 5 dequeue *~" <<std::endl;
+    Bounded_Dequeue<int> My_Dequeue5(5);
+    My_Dequeue5.push_back(1);
+    My_Dequeue5.push_back(5);
+    My_Dequeue5.push_back(1);
+    My_Dequeue5.push_back(5);
+    My_Dequeue5.print_dequeue();
 
+
+    std::cout << "\n~* Testing size 6 dequeue *~" <<std::endl;
+    Bounded_Dequeue<int> My_Dequeue6(6);
+
+    My_Dequeue6.push_back(4);
+    My_Dequeue6.push_back(3);
+    My_Dequeue6.push_back(2);
+    My_Dequeue6.push_back(1);
+    My_Dequeue6.push_front(5);
+    My_Dequeue6.push_front(6);
+
+    My_Dequeue6.print_dequeue();
+
+    Bounded_Dequeue<int> My_Dequeue7(7);
+
+    My_Dequeue7.push_back(37);
+    My_Dequeue7.push_back(31);
+    My_Dequeue7.push_back(22);
+    My_Dequeue7.push_back(13);
+    My_Dequeue7.push_front(1);
+    My_Dequeue7.push_front(2);
+    My_Dequeue7.push_front(3);
+
+    My_Dequeue7.print_dequeue();
+
+
+    Bounded_Dequeue<int> My_Dequeue8(8);
+
+    My_Dequeue8.push_back(38);
+    My_Dequeue8.push_back(31);
+    My_Dequeue8.push_back(22);
+    My_Dequeue8.push_back(13);
+
+    My_Dequeue8.print_dequeue();
+
+    // try {
+    //     My_Dequeue6.push_back(7); // should throw exception, full
+    //     // My_Dequeue6.push_back(7); // should throw exception, full
     //
-    // std::cout << "\n~* Testing size 5 dequeue *~" <<std::endl;
-    // Bounded_Dequeue<int> My_Dequeue5(5);
-    //
-    // std::cout << "\n~* Testing size 6 dequeue *~" <<std::endl;
-    // Bounded_Dequeue<int> My_Dequeue6(6);
-    //
-    //
-    // My_Dequeue.push_back(25);
-    // My_Dequeue.push_front(37);
-    //
+    // } catch ( std::runtime_error const & e ) {
+    //     std::cout<<" error cannot push to a full dequeue"<<std::endl;
+    // }
+
+
+
+
+
 
     return 0;
 
