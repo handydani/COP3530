@@ -4,10 +4,24 @@
 //  Created by Daniela Isabel Travieso on 9/7/17.
 //  Copyright © 2017 Daniela Isabel Travieso. All rights reserved.
 //
+/*
+                                Back here in my bedroom
+                                I've turned out the light
+                                I've shut up the shutters
+                                I'm saying good night
+
+                                I've had it with moonlight
+                                I'm ready for dawn
+                                But when I turn off the radio
+                                I'm still riddled with songs
+
+                                    - Matt Duncan, Beacon
+*/
 
 #ifndef adt_ll_h
 #define adt_ll_h
-
+#include <iostream>
+namespace cop3530 {
 template <typename T>
 class adt_ll
 {
@@ -24,13 +38,13 @@ public:
     virtual T peek_back(void) = 0;
     virtual T peek_front(void) = 0;
     virtual bool is_empty(void) = 0;
-    virtual bool is_full() = 0;
+    virtual bool is_full(void) = 0;
     virtual size_t length(void) = 0;
     virtual void clear(void) = 0;
-    virtual void contains( T element, /*equals_function*/) = 0;
-    virtual void print(ostream) = 0;
-    virtual void contents() = 0;
+    virtual void contains( T element /*equals_function*/) = 0;
+    virtual void print() = 0;
+    virtual int* contents() = 0;
 
 };
-
+}
 #endif /* adt_ll_h */
