@@ -31,8 +31,8 @@ public:
     virtual void insert( T element, size_t position) = 0;
     virtual void push_back(T element) = 0;
     virtual void push_front(T element) = 0;
-    virtual void replace( T element, size_t position) = 0;
-    virtual void remove(size_t position) = 0;
+    virtual T replace( T element, size_t position) = 0;
+    virtual T remove(size_t position) = 0;
     virtual T pop_back(void) = 0;
     virtual T pop_front(void) = 0;
     virtual T peek_back(void) = 0;
@@ -43,7 +43,7 @@ public:
     virtual void clear(void) = 0;
     virtual void contains( T element /*equals_function*/) = 0;
     virtual void print() = 0;
-    virtual int* contents() = 0;
+    virtual T* contents() = 0;
 
 };
 }

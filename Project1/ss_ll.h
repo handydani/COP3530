@@ -3,7 +3,7 @@
 #include <iostream>
 #include "node.h"
 #include <stdexcept>
-
+using namespace cop3530;
 // ___________________________
 // < simple singly linked list >
 // ---------------------------
@@ -14,7 +14,7 @@
 //                ||     ||
 
 template <typename T>
-class ss_ll : public cop3530::adt_ll<T>
+class ss_ll : public adt_ll<T>
 {
     public:
         ss_ll(int i);
@@ -23,8 +23,8 @@ class ss_ll : public cop3530::adt_ll<T>
         void insert( T element, size_t position) override;
         void push_back(T element) override;
         void push_front(T element) override;
-        void replace( T element, size_t position) override;
-        void remove(size_t position) override;
+        T replace( T element, size_t position) override;
+        T remove(size_t position) override;
         T pop_back(void) override;
         T pop_front(void) override;
         T peek_back(void) override;
@@ -35,7 +35,7 @@ class ss_ll : public cop3530::adt_ll<T>
         void clear(void) override;
         void contains( T element /*equals_function*/) override;
         void print() override;
-        int* contents() override;
+        T * contents() override;
 
 
     private:
@@ -84,13 +84,13 @@ ss_ll<T>::~ss_ll()
 template <typename T>
 void ss_ll<T>::insert(T element, size_t position)
 {
-    //TODO debug
+    //COMPLETE
     if(position == 0)
     {
         push_front(element);
         return;
     }
-    else if (position == length())
+    else if (position + 1 == length())
     {
         push_back(element);
         return;
@@ -103,23 +103,30 @@ void ss_ll<T>::insert(T element, size_t position)
     else
     {
         Node<T> * itr = new Node<T>;
+        Node<T> * prev = new Node<T>;
 
         itr = head;
-        while(position){
+        while(position + 1){
+            prev = itr;
             itr = itr->next;
             --position;
         }
         Node<T> * new_node = new Node<T>;
-
-        new_node = itr;
-        new_node->data = itr->data;
-        new_node->next = itr->next;
+        // new_node = itr;
+        prev->next = new_node;
+        new_node->data = element;
+        new_node->next = itr;
     }
 }
 template <typename T>
 void ss_ll<T>::push_back(T element)
 {
-    //TODO debug
+    //COMPLETE
+    if (!length()){
+        push_front(element);
+        return;
+    }
+
     Node <T> * new_node = new Node<T>;
     Node <T> * old_node = new Node<T>;
     Node <T> * itr = new Node<T>;
@@ -154,7 +161,7 @@ void ss_ll<T>::push_back(T element)
 template <typename T>
 void ss_ll<T>::push_front(T element)
 {
-    //TODO debug
+    //COMPLETE
     Node <T> * new_node = new Node<T>;
     Node <T> * next_node = new Node<T>;
 
@@ -182,26 +189,116 @@ void ss_ll<T>::push_front(T element)
     return;
 }
 template <typename T>
-void ss_ll<T>::replace( T element, size_t position)
+T ss_ll<T>::replace( T element, size_t position)
 {
-    //in order to do this one like it's insert you
-    //have to finish remove, pop back, and pop front
+    //COMPLETE
+    T replaced;
+    if(position == 0){
+        replaced = pop_front();
+        push_front(element);
+    }
+    else if(position + 1 == length()){
+        replaced = pop_back();
+        push_back(element);
+    }
+    else if (position + 1 > length()){
+        std::domain_error d("The position requested does not exist");
+        throw d;
+    }
+    else{
+
+        replaced = remove(position);
+
+        Node<T> * itr = new Node<T>;
+        Node<T> * prev = new Node<T>;
+
+        itr = head;
+        while(position + 1){
+            prev = itr;
+            itr = itr->next;
+            --position;
+        }
+        Node<T> * new_node = new Node<T>;
+        // new_node = itr;
+        prev->next = new_node;
+        new_node->data = element;
+        new_node->next = itr;
+    }
+    return replaced;
 }
 template <typename T>
-void ss_ll<T>::remove(size_t position)
+T ss_ll<T>::remove(size_t position)
 {
+    //COMPLETE
+    T removed;
+    if(position == 0)
+    {
+        removed = pop_front();
+    }
+    else if (position + 1 == length())
+    {
+        removed = pop_back();
+    }
+    else if (position + 1 > length())
+    {
+        std::domain_error d("The position requested does not exist");
+        throw d;
+    }
+    else
+    {
+        Node<T> * itr = new Node<T>;
+        Node<T> * prev = new Node<T>;
 
+        itr = head->next;
+        prev = head;
+        while(position){
+            itr = itr->next;
+            prev = prev->next;
+            --position;
+        }
+
+        removed = itr->data;
+        prev->next = itr->next;
+        itr->next = nullptr;
+        itr->data = NULL;
+        delete itr;
+    }
+    return removed;
 }
 template <typename T>
 T ss_ll<T>::pop_back(void)
 {
-    return 1;
+    //COMPLETE
+    T popped;
+    Node <T> * last_node = new Node<T>;
+    Node <T> * prev_node = new Node<T>;
+
+    //traverse the list leaving prev one behind last
+    last_node = head;
+    while(last_node->next){
+        prev_node = last_node;
+        last_node = last_node->next;
+    }
+    //popped now contains the data to be deleted
+    popped = last_node->data;
+
+    //tail is the previous which now points to null
+    tail = prev_node;
+    tail->next = nullptr;
+
+    //zeroing out the data
+    last_node->data = NULL;
+    last_node->next = nullptr;
+    //deleting
+    delete last_node;
+
+    return popped;
 
 }
 template <typename T>
 T ss_ll<T>::pop_front(void)
 {
-    //COMPLETE TODO debugging
+    //COMPLETE
     T popped;
     Node <T> * first_node = new Node<T>;
 
@@ -276,34 +373,44 @@ size_t ss_ll<T>::length(void)
 template <typename T>
 void ss_ll<T>::clear(void)
 {
-    // while(head){
-    //     delete head->data;
-    //     head = head->next;
-    // }
-    // head = new Node<T>;
-    // tail = new Node<T>;
+    //TODO DEBUG
+    while(head){
+        head->data = NULL;
+        head = head->next;
+    }
+    tail->data = NULL;
+    head = new Node<T>;
+    tail = new Node<T>;
 }
 template <typename T>
-void ss_ll<T>::contains( T element /*equals_function*/)
+void ss_ll<T>::contains( T element/*, bool &equals_function()*/)
 {
+    //TODO
+
 
 }
 template <typename T>
-int* ss_ll<T>::contents()
+bool equals_function(T element1, T element2)
+{
+    //TODO definitely not this
+    return element1 == element2;
+}
+template <typename T>
+T * ss_ll<T>::contents()
 {
     //TODO FIX
-    // T array [2];
-    int * a;
-    // //im sure theres a bug here
-    // Node <T> * itr = head->next;
-    // int i = 0;
-    //
-    // while(itr)
-    // {
-    //     array[i] = itr->data;
-    //     itr = itr->next;
-    //     ++i;
-    // }
+    T array [length()];
+    T * a;
+    //im sure theres a bug here
+    Node <T> * itr = head->next;
+    T i = 0;
+
+    while(itr)
+    {
+        array[i] = itr->data;
+        itr = itr->next;
+        ++i;
+    }
     //
     return a;
 
@@ -329,43 +436,3 @@ void ss_ll<T>::print()
     }
     std::cout <<"\n";
 }
-
-//
-//
-// int LinkedList::get(std::size_t i) {
-// 	Node *curr = first;
-// 	std::size_t count = 0;
-// 	// move through our linked list,
-// 	// counting each time as we do it.
-// 	while(curr && count != i) {
-// 		curr = curr->next;
-// 		++count;
-// 	}
-//
-// 	// if curr is null OR count is not
-// 	//  equal to i.
-// 	if (!curr || count != i) {
-// 		throw std::out_of_range(
-// 			"index out of range"
-// 		);
-// 	}
-// 	// If we get here, then curr IS index i.
-// 	// therefore, we can return curr's data.
-// 	return curr->data;
-// }
-//
-// int LinkedList::get(std::size_t i) {
-// 	if (!first) {
-// 		throw std::out_of_range("invalid index");
-// 	}
-// 	Node *curr = first;
-// 	std::size_t count = 0;
-// 	while(count < i && curr->next) {
-// 		++count;
-// 		curr=curr->next;
-// 	}
-// 	if (count != i) {
-// 		throw std::out_of_range("invalid index");
-// 	}
-// 	return curr->data;
-// }
