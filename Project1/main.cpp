@@ -1,12 +1,13 @@
 #include "ss_ll.h"
 #include <iostream>
 #include <stdexcept>
+#include "sd_al.h"
 using namespace cop3530;
 int main()
 {
 
     std::cout <<"Hello World" <<std::endl;
-    // ss_ll<int> newList(0);
+    ss_ll<int> newList(0);
 
     newList.insert(3, 0);
     newList.insert(2, 1);
@@ -64,9 +65,26 @@ int main()
 
     }
 
+    std::cout << "This is now a simple dynamic array list"<<std::endl;
+    sd_al<int> newSDALList(10);
+    newSDALList.push_back(1);
+    newSDALList.push_back(2);
+    newSDALList.push_back(3);
+    newSDALList.push_back(4);
+    newSDALList.push_front(5);
+    newSDALList.print();
 
+    newSDALList.insert(6, 5);
+    newSDALList.insert(12, 0);
+    newSDALList.insert(2, 1);
 
+    newSDALList.print();
+    std::cout << newSDALList.pop_back() << std::endl;
+    newSDALList.print();
 
+    std::cout << newSDALList.pop_front() << std::endl;
+    newSDALList.print();
 
+    //finished insert, push front, push back, pop front, pop back, print, length
     return 0;
 }

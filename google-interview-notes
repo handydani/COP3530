@@ -1,0 +1,21 @@
+- walk through an example
+    - is that correct?
+    - going back forth
+    - talking about same thing interviewer is
+    - don't waste time solving the wrong problem
+- assumptions?
+    - sorted?
+    - always at least one answer?
+    - can there be duplicates?
+    - max input size?
+    - int, double, char, templates
+- brute force
+    - might not be the most elegant solution but it works
+    - space complexity
+    - time complexity
+- can you think of a better improvement with a data structure
+    - hash map
+    - most time spent on whether an element exist
+- interface
+- ... this is the ...
+-
