@@ -373,7 +373,7 @@ size_t ss_ll<T>::length(void)
 template <typename T>
 void ss_ll<T>::clear(void)
 {
-    //TODO DEBUG
+    //COMPLETE
     while(head){
         head->data = NULL;
         head = head->next;
@@ -398,26 +398,16 @@ bool equals_function(T element1, T element2)
 template <typename T>
 T * ss_ll<T>::contents()
 {
-    //TODO FIX
+    //COMPLETE
     T array [length()];
-    T * a;
-    //im sure theres a bug here
     Node <T> * itr = head->next;
-    T i = 0;
 
-    while(itr)
-    {
+    for (int i = 0; i < length(); i++){
         array[i] = itr->data;
         itr = itr->next;
-        ++i;
     }
-    //
-    return a;
 
-    // int * a = newList.contents();
-    // std::cout << a[0] << std::endl;
-    // std::cout << a[1] << std::endl;
-    // std::cout << a[2] << std::endl;
+    return array;
 }
 
 template <typename T>
