@@ -138,79 +138,49 @@ void sd_al<T>::push_front(T element)
 template <typename T>
 T sd_al<T>::replace( T element, size_t position)
 {
-    //COMPLETE
-    // T replaced;
-    // if(position == 0){
-    //     replaced = pop_front();
-    //     push_front(element);
-    // }
-    // else if(position + 1 == length()){
-    //     replaced = pop_back();
-    //     push_back(element);
-    // }
-    // else if (position + 1 > length()){
-    //     std::domain_error d("The position requested does not exist");
-    //     throw d;
-    // }
-    // else{
-    //
-    //     replaced = remove(position);
-    //
-    //     Node<T> * itr = new Node<T>;
-    //     Node<T> * prev = new Node<T>;
-    //
-    //     itr = head;
-    //     while(position + 1){
-    //         prev = itr;
-    //         itr = itr->next;
-    //         --position;
-    //     }
-    //     Node<T> * new_node = new Node<T>;
-    //     // new_node = itr;
-    //     prev->next = new_node;
-    //     new_node->data = element;
-    //     new_node->next = itr;
-    // }
-    // return replaced;
+    T replaced = 0;
+    if(position == 0){
+        replaced = pop_front();
+        push_front(element);
+    }
+    else if(position + 1 == length()){
+        replaced = pop_back();
+        push_back(element);
+    }
+    else if (position + 1 > length()){
+        //find next array
+    }
+    else{
+        replaced = remove(position);
+        insert(element, position);
+    }
+    return replaced;
 }
 template <typename T>
 T sd_al<T>::remove(size_t position)
 {
-    //COMPLETE
-    // T removed;
-    // if(position == 0)
-    // {
-    //     removed = pop_front();
-    // }
-    // else if (position + 1 == length())
-    // {
-    //     removed = pop_back();
-    // }
-    // else if (position + 1 > length())
-    // {
-    //     std::domain_error d("The position requested does not exist");
-    //     throw d;
-    // }
-    // else
-    // {
-    //     Node<T> * itr = new Node<T>;
-    //     Node<T> * prev = new Node<T>;
-    //
-    //     itr = head->next;
-    //     prev = head;
-    //     while(position){
-    //         itr = itr->next;
-    //         prev = prev->next;
-    //         --position;
-    //     }
-    //
-    //     removed = itr->data;
-    //     prev->next = itr->next;
-    //     itr->next = nullptr;
-    //     itr->data = NULL;
-    //     delete itr;
-    // }
-    // return removed;
+    T removed = 0;
+    if(position == 0)
+    {
+        removed = pop_front();
+    }
+    else if (position + 1 == length())
+    {
+        removed = pop_back();
+    }
+    else if (position + 1 > length())
+    {
+        //find next array
+    }
+    else
+    {
+        removed = data[position];
+        for (int i = position; i < length(); ++i){
+            data[i] = data[i+1];
+        }
+
+    }
+    return removed;
 }
 template <typename T>
 T sd_al<T>::pop_back(void)
@@ -341,7 +311,10 @@ void sd_al<T>::print()
 	std::cout << "Simple Dynamic Array List: ";
 	// loop while itr != null
 	for(int i = 0; i < size; ++i){
-        std::cout << data[i] << " ";
+        if(data[i]){
+            std::cout << data[i] << "->";
+
+        }
     }
 
     std::cout <<"\n";

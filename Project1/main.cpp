@@ -85,6 +85,28 @@ int main()
     std::cout << newSDALList.pop_front() << std::endl;
     newSDALList.print();
 
-    //finished insert, push front, push back, pop front, pop back, print, length
+    std::cout << "testing remove list"<<std::endl;
+
+    std::cout << newSDALList.remove(1) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.remove(0) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.remove(3) << std::endl;
+    newSDALList.print();
+
+    std::cout << "testing replace list"<<std::endl;
+
+    std::cout << newSDALList.replace(0, 0) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.replace(1, 1) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.replace(2, 2) << std::endl;
+    newSDALList.print();
+
+
     return 0;
 }
