@@ -122,5 +122,7 @@ int main()
     // newSDALList.print();
     //
 
+    std::cout << "This is now a chained dynamic array list"<<std::endl;
+
     return 0;
 }

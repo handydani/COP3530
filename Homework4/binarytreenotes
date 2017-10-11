@@ -1,0 +1,12 @@
+Notes about binary trees:
+
+IN: SLR: A B C D E F G
+
+PRE: LSR: D B A C F E G
+POST: LRS: A C B E G F D
+
+
+
+        D
+    B       F
+A   C       E   G
