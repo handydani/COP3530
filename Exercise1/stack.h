@@ -33,6 +33,7 @@ class Stack
                 return popped;
             }
         }
+        return popped;
     }
     bool isEmpty()
     {
@@ -40,6 +41,7 @@ class Stack
         {
             return true;
         }
+        return false;
     }
     bool isFull()
     {
@@ -47,6 +49,18 @@ class Stack
         {
             return true;
         }
+        return false;
+    }
+    unsigned int size()
+    {
+        unsigned int ctr = 0;
+        for(int i = 0; i < 5; ++i){
+            if(container[i] != 0){
+                ++ctr;
+            }
+        }
+        
+        return ctr;
     }
     void print()
     {

@@ -130,11 +130,17 @@ void cd_al<T>::push_back(T element)
         return;
     }
     else{
+        // Node <T> * new_node = new Node<T>;
+        // T * itr = &head;
+        // last->next = new_node;
+        // new_node->next = nullptr;
+        // tail = 0;
+        // push_back(element);
         Node <T> * new_node = new Node<T>;
-        last->next = new_node;
-        new_node->next = nullptr;
-        tail = 0;
-        push_back(element);
+        
+        last = new_node;
+        last->next = nullptr;
+
     }
 }
 template <typename T>
