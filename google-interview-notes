@@ -10,6 +10,7 @@
     - max input size?
     - int, double, char, templates
 - brute force
+    - state that its brute force and acknowledge
     - might not be the most elegant solution but it works
     - space complexity
     - time complexity

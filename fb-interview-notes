@@ -1,0 +1,68 @@
+Fit: We're looking for your ability to understand and explain complex ideas.
+We look for a healthy level of enthusiasm, curiosity and motivation.
+Interviewers are evaluating you as a potential colleague. We have a ridiculous ratio of users to engineers and ship code five days a week.
+We want people who know how to make a large impact, who can move quickly, make bold choices, and be transparent about what they are doing.
+
+Generalism: We need many kinds of specialists, but we also look for people who can fill other roles in a pinch.
+This means understanding the "stack" above and below your area of expertise. Bonus points for having multiple areas of expertise.
+It's not unusual for someone at Facebook to work on machine learning, then move on to web performance, build and maintain a new backend tool, then spend a year on photos.
+
+Architecture: Can you arrive at an answer in the face of unusual constraints?
+We want to see how well you can visualize the entire problem and solution space.
+We also want to see how much you've thought about Facebook in particular and some of the unique problems we face.
+How would you architect a world-wide video distribution system? Or Facebook chat?
+
+Coding: We don't ask puzzle-type questions, where you need to know a trick.
+Even so, the coding questions you get asked may sound contrived.
+This is because they are contrived, in the sense of being designed for a special purpose.
+They have to be simple enough to explain in a few minutes and solvable in 10 to 30 minutes.
+But they must also require knowledge, skill, and concentration to solve.
+
+
+ Checklist before code:
+
+ We understand the problem
+ Asked clarifying questions
+ Explained our high level approach
+
+Coding:
+
+Did they correctly declare the function?
+Are they familiar with the std lib?
+
+Testing:
+
+Edge case analysis
+    How they go about fixing edge cases
+        Do they just add an if statement?
+        Or do they look for a flaw in their algorithm?
+        Where is the best place to put this if statement?
+Analyze time and space complexity
+    Memory or space efficiency
+        Iterators reduce the space needed
+
+
+Questions to ask:
+    What does a hard day of work look like at Facebook
+    - walk through an example
+        - is that correct?
+        - going back forth
+        - talking about same thing interviewer is
+        - don't waste time solving the wrong problem
+    - assumptions?
+        - sorted?
+        - always at least one answer?
+        - can there be duplicates?
+        - max input size?
+        - int, double, char, templates
+    - brute force
+        - state that its brute force and acknowledge
+        - might not be the most elegant solution but it works
+        - space complexity
+        - time complexity
+    - can you think of a better improvement with a data structure
+        - hash map
+        - most time spent on whether an element exist
+    - interface
+    - ... this is the ...
+    -
