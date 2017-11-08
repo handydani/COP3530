@@ -173,10 +173,15 @@ int main()
     std::cout << "This is now a chained dynamic array list"<<std::endl;
     cd_al<int> CDALList(0);
 
-        CDALList.print();
-    CDALList.push_back(1);
-
     CDALList.print();
+
+    int i = 0;
+    while(i != 50){
+        CDALList.push_back(i);
+        i++;
+    }
+    CDALList.print();
+    std::cout << CDALList.length()<<"\n";
 
     return 0;
 }

@@ -124,7 +124,7 @@ void cd_al<T>::insert(T element, size_t position)
 template <typename T>
 void cd_al<T>::push_back(T element)
 {
-    if (tail != 50){
+    if (tail != 50 ){
         (head->data)[tail] = element;
         ++tail;
         return;
@@ -344,15 +344,17 @@ bool cd_al<T>::is_full()
 template <typename T>
 size_t cd_al<T>::length(void)
 {
-    //COMPLETE
-    // size_t length = 0;
-    // Node <T> * itr = new Node<T>;
-    // itr = head->next;
-    // while(itr){
-    //     ++length;
-    //     itr = itr->next;
-    // }
-    // return length;
+    size_t length = 0;
+    Node_CDAL <T> * itr = head;
+
+    while(itr){
+        for (int i = 0; i < 50; ++i){
+            length++;
+        }
+        itr = itr->next;
+    }
+    return length;
+
 }
 template <typename T>
 void cd_al<T>::clear(void)
@@ -402,7 +404,7 @@ void cd_al<T>::print()
 	std::cout << "Chained Dynamic Array List\n";
     unsigned int node_ctr = 1;
     while(itr){
-        std::cout << "Printing the contents of node " << node_ctr<<": ";
+        std::cout << "Node " << node_ctr<<": ";
         for (int i = 0; i < 50; ++i){
             std::cout << (itr->data)[i] << "->";
         }
