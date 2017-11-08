@@ -1,0 +1,29 @@
+Maps
+
+ADT
+====
+search(k){
+
+    node = root
+    while(node is not empty tree){
+        if (node->key == key){
+            //finish later
+        }
+    }
+}
+insert(k,v){
+    node = root
+    while(node is not empty tree){
+        if(key > node->key)
+            node = node->right
+        else
+            node = node->left
+    }
+    add node as child pair
+}
+remove(k)
+size() => #k,v pairs
+select(int i) => must be ordered, can return 2 types: 1) value 2) key-value pair
+{
+    
+}

@@ -63,14 +63,17 @@ template <typename T>
 ss_ll<T>::~ss_ll()
 {
     //TODO find out how to destroy linked list
-    // bool finished = false;
-    // while(!finished)
-    // {
-    //     Node<T> * temp = new Node<T>;
-    //     temp = head;
-    //     temp = temp->next;
-    //     delete head;
-    // }
+    Node<T> * temp = new Node<T>;
+    Node<T> * next = new Node<T>;
+    temp = head;
+
+    while (temp)
+   {
+       next = temp->next;
+       free(temp);
+       temp = next;
+   }
+
 
 }
 

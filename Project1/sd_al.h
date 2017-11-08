@@ -36,14 +36,13 @@ class sd_al : public adt_ll<T>
         void contains( T element /*equals_function*/) override;
         void print() override;
         T * contents() override;
+        //my helper functions
+        void deallocate_array(void);
+        void allocate_array(void);
 
     private:
         T * data;
         size_t size = 0;
-        size_t head = 0;
-        size_t tail = 0;
-        // size_t next(size_t i);
-        // size_t prev(size_t i);
 };
 
 //                      _                   _
@@ -63,24 +62,11 @@ sd_al<T>::sd_al(size_t array_size): data (new (std::nothrow) T[array_size])
     for(int i = 0; i < array_size; ++i){
         data[i] = 0;
     }
-
-    // if (!array_size){
-    //     array_size = 50;
-    // }
-
 }
 template <typename T>
 sd_al<T>::~sd_al()
 {
-    //TODO find out how to destroy linked list
-    // bool finished = false;
-    // while(!finished)
-    // {
-    //     Node<T> * temp = new Node<T>;
-    //     temp = head;
-    //     temp = temp->next;
-    //     delete head;
-    // }
+    delete[] data;
 
 }
 
@@ -94,31 +80,52 @@ sd_al<T>::~sd_al()
 template <typename T>
 void sd_al<T>::insert(T element, size_t position)
 {
+    //WORKS, NEEDS ERROR CHECKING
+    //TODO check logic it seems like there's a lot of redundancies with the if statements
+    //maybe consider a helper function to check isValid?
+    //check to make sure inputs aren't 0
     if(position == 0)
     {
         push_front(element);
         return;
     }
-    else if (position + 1 == length())
+    else if (position == length())
     {
         push_back(element);
         return;
     }
-    else if (position > length())
-    {
-        //allocate new array
-    }
-    else
+    else if (position < length())
     {
         for(int i = size; i >= position; --i){
             data[i] = data[i-1];
         }
         data[position] = element;
     }
+    else if (position > length() && position < size)
+    {
+        std::cout <<"You cannot insert where there are no nodes to fit in between\n";
+    }
+    else if (position > size)
+    {
+        allocate_array();
+        std::cout <<"You cannot insert at this position but I have created a new list 150% the size of the original so you can continue pushing to it" <<std::endl;
+    }
+    else
+    {
+        std::cout << "what are you doing";
+        //TODO DELETE LATER
+    }
+
 }
 template <typename T>
 void sd_al<T>::push_back(T element)
 {
+    //WORKS, NEEDS ERROR CHECKING
+    //check to make sure inputs aren't 0
+    if (length() + 1 == size)
+    {
+        allocate_array();
+    }
     for(int i = 0; i < size; ++i){
         if(data[i] == 0){
             data[i] = element;
@@ -129,28 +136,39 @@ void sd_al<T>::push_back(T element)
 template <typename T>
 void sd_al<T>::push_front(T element)
 {
+    //WORKS, NEEDS ERROR CHECKING
+    //check to make sure inputs aren't 0
+    if (length() + 1 == size)
+    {
+        allocate_array();
+    }
     for(int i = size; i >= 0; --i){
         data[i] = data[i-1];
     }
     data[0] = element;
-
 }
 template <typename T>
-T sd_al<T>::replace( T element, size_t position)
+T sd_al<T>::replace(T element, size_t position)
 {
+    //WORKS, NEEDS ERROR CHECKING
+
     T replaced = 0;
-    if(position == 0){
+    if(position == 0)
+    {
         replaced = pop_front();
         push_front(element);
     }
-    else if(position + 1 == length()){
+    else if(position + 1 == length())
+    {
         replaced = pop_back();
         push_back(element);
     }
-    else if (position + 1 > length()){
-        //find next array
+    else if (position > length())
+    {
+        std::cout << "there's nothing to replace\n";
     }
-    else{
+    else if(position < length())
+    {
         replaced = remove(position);
         insert(element, position);
     }
@@ -159,97 +177,102 @@ T sd_al<T>::replace( T element, size_t position)
 template <typename T>
 T sd_al<T>::remove(size_t position)
 {
+
+//WORKS, NEEDS ERROR CHECKING
+
     T removed = 0;
-    if(position == 0)
+    if(position == 0) //pop the front
     {
         removed = pop_front();
     }
-    else if (position + 1 == length())
+    else if (position == length() - 1) //pop the last element
     {
         removed = pop_back();
     }
-    else if (position + 1 > length())
+    else if (position >= length()) //trying to remove a node thats not there
     {
-        //find next array
+        std::cout << "You can't remove a node at a position that doesn't exist" << "\n";
     }
-    else
+    else if (position < length() - 1) //valid removal of interior node
     {
         removed = data[position];
         for (int i = position; i < length(); ++i){
             data[i] = data[i+1];
         }
-
     }
+
+    if ((size >= 100) && (length() < (size)/2)) //downsize the array if its too big
+    {
+        deallocate_array();
+    }
+
     return removed;
 }
 template <typename T>
 T sd_al<T>::pop_back(void)
 {
+    //WORKS, NEEDS ERROR CHECKING
+    //
     T popped = data[length() - 1];
     data[length() - 1 ] = 0;
+
+    if ((size >= 100) && (length() < (size)/2)) //downsize the array if its too big
+    {
+        deallocate_array();
+    }
+
     return popped;
 
 }
 template <typename T>
 T sd_al<T>::pop_front(void)
 {
+    //WORKS, NEEDS ERROR CHECKING
+    //
     T popped = data[0];
     data[0] = 0;
     for (int i = 0; i < size; ++i){
         data[i] = data[i+1];
     }
+
+    if ((size >= 100) && (length() < (size)/2)) //downsize the array if its too big
+    {
+        deallocate_array();
+    }
+
     return popped;
 }
 template <typename T>
 T sd_al<T>::peek_back(void)
 {
-    //COMPLETE
-    // T peeked;
-    // if(tail){
-    //     peeked = tail->data;
-    // }
-    // else{
-    //     peeked = 0;
-    // }
-    //
-    // return peeked;
+    return data[length()]-1;
 }
 template <typename T>
 T sd_al<T>::peek_front(void)
 {
-    //COMPLETE
-    // T peeked;
-    // if(head->next){
-    //     peeked = (head->next)->data;
-    // }
-    // else{
-    //     peeked = 0;
-    // }
-    //
-    // return peeked;
+    return data[0];
 }
 template <typename T>
 bool sd_al<T>::is_empty(void)
 {
-    //COMPLETE
-    // bool answer = false;
-    //
-    // if(!head->next)
-    // {
-    //     answer = true;
-    // }
-    //
-    // return answer;
+    bool emptiness = false;
+    if(length() == 0)
+        emptiness = true;
+    return emptiness;
 }
 template <typename T>
 bool sd_al<T>::is_full()
 {
-    //COMPLETE
-    // return false;
+    bool fullness = false;
+    if(size == length())
+        fullness = true;
+    return fullness;
 }
 template <typename T>
 size_t sd_al<T>::length(void)
 {
+    //DONT WORK
+
     size_t counter = 0;
     for(int i = 0; i < size; ++i){
         if(data[i] == 0){
@@ -261,14 +284,8 @@ size_t sd_al<T>::length(void)
 template <typename T>
 void sd_al<T>::clear(void)
 {
-    //TODO DEBUG
-    // while(head){
-    //     head->data = NULL;
-    //     head = head->next;
-    // }
-    // tail->data = NULL;
-    // head = new Node<T>;
-    // tail = new Node<T>;
+    for(int i = 0; i < size; ++i)
+        data[i] = 0;
 }
 template <typename T>
 void sd_al<T>::contains( T element/*, bool &equals_function()*/)
@@ -280,61 +297,84 @@ void sd_al<T>::contains( T element/*, bool &equals_function()*/)
 template <typename T>
 T * sd_al<T>::contents()
 {
-    //TODO FIX
-    // T array [length()];
-    // T * a;
-    // //im sure theres a bug here
-    // Node <T> * itr = head->next;
-    // T i = 0;
-    //
-    // while(itr)
-    // {
-    //     array[i] = itr->data;
-    //     itr = itr->next;
-    //     ++i;
-    // }
-    // //
-    // return a;
-
-    // int * a = newList.contents();
-    // std::cout << a[0] << std::endl;
-    // std::cout << a[1] << std::endl;
-    // std::cout << a[2] << std::endl;
+    T * ptr = &data[0];
+    return ptr;
 }
 
 template <typename T>
 void sd_al<T>::print()
 {
     //COMPLETE
-	//temp ptr for itr
-
 	std::cout << "Simple Dynamic Array List: ";
 	// loop while itr != null
 	for(int i = 0; i < size; ++i){
-        if(data[i]){
             std::cout << data[i] << "->";
-
-        }
     }
 
     std::cout <<"\n";
 }
-// template <typename T>
-// size_t sd_al<T>::next(size_t i)
-// {
-//     if(++i == size)
-//     {
-//         //allocate new array
-//     }
-//     return i;
-// }
-//
-// template <typename T>
-// size_t sd_al<T>::prev(size_t i)
-// {
-//     if(i == 0)
-//     {
-//         //find previous array
-//     }
-//     return i;
-// }
+
+// _____________
+// < helper fxns >
+// -------------
+//        \   ^__^
+//         \  (oo)\_______
+//            (__)\       )\/\
+//                ||----w |
+//                ||     ||
+
+template <typename T>
+void sd_al<T>::allocate_array(void)
+{
+    // TODO use contents() once that fxn is complete
+    //TESTING
+    T temp[size]; //temp array for storing variables
+    size_t prev_size = size; //store the original size
+
+
+    for(int i = 0 ; i < prev_size; ++i){ //copy the contents of data to temp
+        temp[i] = data[i];
+    }
+
+    size = 1.5 * prev_size;//will this work?
+    data = (new T[size]); //reinitialize the data variable to 150% the size of the original
+
+    for(int i = 0 ; i < prev_size; ++i){ //copy temp back to data
+        data[i] = temp[i];
+        std::cout << data[i];
+
+    }
+    std::cout <<"\n";
+    for(int i = prev_size; i < size; ++i){ //initialize the rest of the array w 0
+        data[i] = 0;
+    }
+
+}
+
+template <typename T>
+void sd_al<T>::deallocate_array(void)
+{
+    // TODO use contents() once that fxn is complete
+    //TESTING
+
+    T temp[size]; //temp array for storing variables
+    size_t prev_size = size; //store the original size
+
+
+    for(int i = 0 ; i < prev_size; ++i){ //copy the contents of data to temp
+        temp[i] = data[i];
+    }
+
+    size = 0.75 * prev_size;//will this work?
+    data = (new T[size]); //reinitialize the data variable to 150% the size of the original
+
+    for(int i = 0 ; i < prev_size; ++i){ //copy temp back to data
+        data[i] = temp[i];
+        std::cout << data[i];
+    }
+    std::cout << "\n";
+    for(int i = prev_size; i < size; ++i){ //initialize the rest of the array w 0
+        data[i] = 0;
+    }
+
+}

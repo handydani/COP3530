@@ -79,50 +79,68 @@ int main()
 
     newList.clear();
     newList.print();
-    // std::cout << "This is now a simple dynamic array list"<<std::endl;
-    // sd_al<int> newSDALList(10);
-    // newSDALList.push_back(1);
-    // newSDALList.push_back(2);
-    // newSDALList.push_back(3);
-    // newSDALList.push_back(4);
-    // newSDALList.push_front(5);
-    // newSDALList.print();
-    //
-    // newSDALList.insert(6, 5);
-    // newSDALList.insert(12, 0);
-    // newSDALList.insert(2, 1);
-    //
-    // newSDALList.print();
-    // std::cout << newSDALList.pop_back() << std::endl;
-    // newSDALList.print();
-    //
-    // std::cout << newSDALList.pop_front() << std::endl;
-    // newSDALList.print();
-    //
-    // std::cout << "testing remove list"<<std::endl;
-    //
-    // std::cout << newSDALList.remove(1) << std::endl;
-    // newSDALList.print();
-    //
-    // std::cout << newSDALList.remove(0) << std::endl;
-    // newSDALList.print();
-    //
-    // std::cout << newSDALList.remove(3) << std::endl;
-    // newSDALList.print();
-    //
-    // std::cout << "testing replace list"<<std::endl;
-    //
-    // std::cout << newSDALList.replace(0, 0) << std::endl;
-    // newSDALList.print();
-    //
-    // std::cout << newSDALList.replace(1, 1) << std::endl;
-    // newSDALList.print();
-    //
-    // std::cout << newSDALList.replace(2, 2) << std::endl;
-    // newSDALList.print();
-    //
+    std::cout << "This is now a simple dynamic array list"<<std::endl;
+    sd_al<int> newSDALList(10);
+    newSDALList.push_back(1);
+    newSDALList.push_back(2);
+    newSDALList.push_back(3);
+    newSDALList.push_back(4);
+    newSDALList.push_front(5);
+    newSDALList.print();
 
-    std::cout << "This is now a chained dynamic array list"<<std::endl;
+    newSDALList.insert(6, 5);
+    newSDALList.insert(12, 0);
+    newSDALList.insert(2, 1);
+
+    newSDALList.print();
+    std::cout << newSDALList.pop_back() << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.pop_front() << std::endl;
+    newSDALList.print();
+
+    std::cout << "testing remove list"<<std::endl;
+
+    std::cout << newSDALList.remove(1) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.remove(0) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.remove(3) << std::endl;
+    newSDALList.print();
+
+    std::cout << "testing replace list"<<std::endl;
+
+    std::cout << newSDALList.replace(37, 0) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.replace(38, 1) << std::endl;
+    newSDALList.print();
+
+    std::cout << newSDALList.replace(39, 2) << std::endl;
+    newSDALList.print();
+    std::cout << newSDALList.replace(40, 6) << std::endl;
+
+
+    std::cout << "------testing allocation/deallocation of list------"<<std::endl;
+
+    newSDALList.push_back(40);
+    newSDALList.push_back(41);
+    newSDALList.push_back(42);
+    newSDALList.push_back(43);
+    newSDALList.push_back(44);
+    newSDALList.push_back(45);
+    std::cout << newSDALList.length() << std::endl;
+
+    newSDALList.push_back(46);
+    std::cout << newSDALList.length() << std::endl;
+    newSDALList.print();
+
+    newSDALList.push_back(47);
+
+    newSDALList.print();
+    std::cout << newSDALList.length() << std::endl;
 
     return 0;
 }
