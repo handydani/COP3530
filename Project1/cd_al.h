@@ -4,7 +4,7 @@
 #include "node_cdal.h"
 #include <stdexcept>
 
-namespace cop3530;
+using namespace cop3530;
 // _______________________________
 // < chained dynamic array list >
 // -------------------------------
@@ -39,12 +39,11 @@ class cd_al : public adt_ll<T>
 
 
     private:
-        Node <T> * head;
-        Node <T> * last;
-        size_t tail;
-        // Node <T> * first;
-        // Node <T> * last;
+        Node_CDAL <T> * head;
+        Node_CDAL <T> * mid;
 
+        Node_CDAL <T> * last;
+        size_t tail;
 
 };
 
@@ -57,9 +56,10 @@ class cd_al : public adt_ll<T>
 template <typename T>
 cd_al<T>::cd_al(int i)
 {
-    head = new Node<T>;
-    last = head;
-    last->next = nullptr;
+    head = new Node_CDAL<T>;
+    last = new Node_CDAL<T>;
+    head->next = last;
+    last->next = NULL;
     tail = 0;
 }
 template <typename T>
@@ -69,7 +69,7 @@ cd_al<T>::~cd_al()
     // bool finished = false;
     // while(!finished)
     // {
-    //     Node<T> * temp = new Node<T>;
+    //     Node_CDAL<T> * temp = new Node<T>;
     //     temp = head;
     //     temp = temp->next;
     //     delete head;
@@ -125,20 +125,14 @@ template <typename T>
 void cd_al<T>::push_back(T element)
 {
     if (tail != 50){
-        (last->data)[tail] = element;
+        (head->data)[tail] = element;
         ++tail;
         return;
     }
     else{
-        // Node <T> * new_node = new Node<T>;
-        // T * itr = &head;
-        // last->next = new_node;
-        // new_node->next = nullptr;
-        // tail = 0;
-        // push_back(element);
-        Node <T> * new_node = new Node<T>;
-        
-        last = new_node;
+
+        Node_CDAL <T> * new_node = new Node_CDAL<T>;
+        head->next = new_node;
         last->next = nullptr;
 
     }
@@ -380,7 +374,7 @@ void cd_al<T>::contains( T element/*, bool &equals_function()*/)
 
 }
 template <typename T>
-bool equals_function(T element1, T element2)
+bool equals_function(T element1/*, T element2*/)
 {
     //TODO definitely not this
     // return element1 == element2;
@@ -403,17 +397,19 @@ T * cd_al<T>::contents()
 template <typename T>
 void cd_al<T>::print()
 {
-	Node <T> * itr = head;
+	Node_CDAL <T> * itr = head;
 
-	std::cout << "Chained Dynamic Array List: ";
-
-    do{
+	std::cout << "Chained Dynamic Array List\n";
+    unsigned int node_ctr = 1;
+    while(itr){
+        std::cout << "Printing the contents of node " << node_ctr<<": ";
         for (int i = 0; i < 50; ++i){
             std::cout << (itr->data)[i] << "->";
         }
+        std::cout << "\n";
         itr = itr->next;
-
-    }while(itr->next != NULL)
+        node_ctr++;
+    }
 
     std::cout <<"\n";
 }

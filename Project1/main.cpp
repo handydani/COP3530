@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include "sd_al.h"
-#include "node.h"
+#include "cd_al.h"
 using namespace cop3530;
 int main()
 {
@@ -166,10 +166,17 @@ int main()
     deallSDALList.clear();
     deallSDALList.print();
     // std::cout << "------testing deletion of list------"<<std::endl;
-    // lol
+    // lol this wont work
     // deallSDALList.~sd_al<int>();
 
-    
+
+    std::cout << "This is now a chained dynamic array list"<<std::endl;
+    cd_al<int> CDALList(0);
+
+        CDALList.print();
+    CDALList.push_back(1);
+
+    CDALList.print();
 
     return 0;
 }

@@ -43,7 +43,17 @@ class sd_al : public adt_ll<T>
     private:
         T * data;
         size_t size = 0;
+        size_t tail;
 };
+
+
+
+
+//TODO UPDATE WITH TAIL INSTEAD OF USING 0'S AS AN INDICATOR
+
+
+
+
 
 //                      _                   _
 //   ___ ___  _ __  ___| |_ _ __ _   _  ___| |_ ___  _ __
@@ -62,6 +72,7 @@ sd_al<T>::sd_al(size_t array_size): data (new (std::nothrow) T[array_size])
     for(int i = 0; i < array_size; ++i){
         data[i] = 0;
     }
+    tail = 0;
 }
 template <typename T>
 sd_al<T>::~sd_al()
@@ -79,7 +90,6 @@ sd_al<T>::~sd_al()
 template <typename T>
 void sd_al<T>::insert(T element, size_t position)
 {
-    //WORKS, NEEDS ERROR CHECKING
     //TODO check logic it seems like there's a lot of redundancies with the if statements
     //maybe consider a helper function to check isValid?
     //check to make sure inputs aren't 0
@@ -119,7 +129,6 @@ void sd_al<T>::insert(T element, size_t position)
 template <typename T>
 void sd_al<T>::push_back(T element)
 {
-    //WORKS, NEEDS ERROR CHECKING
     //check to make sure inputs aren't 0
     if (length() + 1 == size)
     {
@@ -135,7 +144,6 @@ void sd_al<T>::push_back(T element)
 template <typename T>
 void sd_al<T>::push_front(T element)
 {
-    //WORKS, NEEDS ERROR CHECKING
     //check to make sure inputs aren't 0
     if (length() + 1 == size)
     {
@@ -149,8 +157,6 @@ void sd_al<T>::push_front(T element)
 template <typename T>
 T sd_al<T>::replace(T element, size_t position)
 {
-    //WORKS, NEEDS ERROR CHECKING
-
     T replaced = 0;
     if(position == 0)
     {
@@ -176,9 +182,6 @@ T sd_al<T>::replace(T element, size_t position)
 template <typename T>
 T sd_al<T>::remove(size_t position)
 {
-
-//WORKS, NEEDS ERROR CHECKING
-
     T removed = 0;
     if(position == 0) //pop the front
     {
@@ -210,8 +213,6 @@ T sd_al<T>::remove(size_t position)
 template <typename T>
 T sd_al<T>::pop_back(void)
 {
-    //WORKS, NEEDS ERROR CHECKING
-    //
     T popped = data[length() - 1];
     data[length() - 1 ] = 0;
     if ((size >= 100) && (length() < (size)/2)) //downsize the array if its too big
@@ -225,8 +226,6 @@ T sd_al<T>::pop_back(void)
 template <typename T>
 T sd_al<T>::pop_front(void)
 {
-    //WORKS, NEEDS ERROR CHECKING
-    //
     T popped = data[0];
     data[0] = 0;
     for (int i = 0; i < size; ++i){
@@ -302,7 +301,6 @@ T * sd_al<T>::contents()
 template <typename T>
 void sd_al<T>::print()
 {
-    //COMPLETE
 	std::cout << "Simple Dynamic Array List: ";
 	// loop while itr != null
 	for(int i = 0; i < size; ++i){
@@ -324,8 +322,6 @@ void sd_al<T>::print()
 template <typename T>
 void sd_al<T>::allocate_array(void)
 {
-    // TODO use contents() once that fxn is complete
-    //TESTING
     T temp[size]; //temp array for storing variables
     size_t prev_size = size; //store the original size
     for(int i = 0 ; i < prev_size; ++i){ //copy the contents of data to temp
@@ -346,9 +342,6 @@ void sd_al<T>::allocate_array(void)
 template <typename T>
 void sd_al<T>::deallocate_array(void)
 {
-    // TODO use contents() once that fxn is complete
-    //TESTING
-
     T temp[size]; //temp array for storing variables
     size_t prev_size = size; //store the original size
 
