@@ -120,10 +120,11 @@ int main()
 
     std::cout << newSDALList.replace(39, 2) << std::endl;
     newSDALList.print();
-    std::cout << newSDALList.replace(40, 6) << std::endl;
+    std::cout << newSDALList.replace(40, 3) << std::endl;
 
+    newSDALList.print();
 
-    std::cout << "------testing allocation/deallocation of list------"<<std::endl;
+    std::cout << "------testing allocation of list------"<<std::endl;
 
     newSDALList.push_back(40);
     newSDALList.push_back(41);
@@ -131,16 +132,44 @@ int main()
     newSDALList.push_back(43);
     newSDALList.push_back(44);
     newSDALList.push_back(45);
-    std::cout << newSDALList.length() << std::endl;
+    newSDALList.print();
+
+    std::cout << "The length of the list is " << newSDALList.length() << std::endl;
 
     newSDALList.push_back(46);
-    std::cout << newSDALList.length() << std::endl;
+    std::cout << "The length of the list is " << newSDALList.length() << std::endl;
     newSDALList.print();
 
     newSDALList.push_back(47);
 
     newSDALList.print();
-    std::cout << newSDALList.length() << std::endl;
+    std::cout << "The length of the list is " << newSDALList.length() << std::endl;
+
+
+    std::cout << "------testing deallocation of list------"<<std::endl;
+
+    sd_al<int> deallSDALList(100);
+    deallSDALList.push_back(40);
+    deallSDALList.push_back(41);
+    deallSDALList.push_back(42);
+    deallSDALList.push_back(43);
+    deallSDALList.push_back(44);
+    deallSDALList.push_back(45);
+    deallSDALList.print();
+
+    std::cout << "The length of the list is " << deallSDALList.length() << std::endl;
+    deallSDALList.pop_back();
+    deallSDALList.print();
+
+    std::cout << "------testing clearing of list------"<<std::endl;
+
+    deallSDALList.clear();
+    deallSDALList.print();
+    // std::cout << "------testing deletion of list------"<<std::endl;
+    // lol
+    // deallSDALList.~sd_al<int>();
+
+    
 
     return 0;
 }

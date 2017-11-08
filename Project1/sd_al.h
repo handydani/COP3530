@@ -67,7 +67,6 @@ template <typename T>
 sd_al<T>::~sd_al()
 {
     delete[] data;
-
 }
 
 //   __                  _   _
@@ -163,7 +162,7 @@ T sd_al<T>::replace(T element, size_t position)
         replaced = pop_back();
         push_back(element);
     }
-    else if (position > length())
+    else if (position >= length())
     {
         std::cout << "there's nothing to replace\n";
     }
@@ -215,12 +214,11 @@ T sd_al<T>::pop_back(void)
     //
     T popped = data[length() - 1];
     data[length() - 1 ] = 0;
-
     if ((size >= 100) && (length() < (size)/2)) //downsize the array if its too big
     {
         deallocate_array();
     }
-
+    std::cout << popped <<std::endl;
     return popped;
 
 }
@@ -245,7 +243,7 @@ T sd_al<T>::pop_front(void)
 template <typename T>
 T sd_al<T>::peek_back(void)
 {
-    return data[length()]-1;
+    return data[length()-1];
 }
 template <typename T>
 T sd_al<T>::peek_front(void)
@@ -271,7 +269,7 @@ bool sd_al<T>::is_full()
 template <typename T>
 size_t sd_al<T>::length(void)
 {
-    //DONT WORK
+    //IT WORK
 
     size_t counter = 0;
     for(int i = 0; i < size; ++i){
@@ -330,25 +328,19 @@ void sd_al<T>::allocate_array(void)
     //TESTING
     T temp[size]; //temp array for storing variables
     size_t prev_size = size; //store the original size
-
-
     for(int i = 0 ; i < prev_size; ++i){ //copy the contents of data to temp
         temp[i] = data[i];
+        data[i] = 0;
     }
-
     size = 1.5 * prev_size;//will this work?
-    data = (new T[size]); //reinitialize the data variable to 150% the size of the original
+    data = new T[size]; //reinitialize the data variable to 150% the size of the original
 
     for(int i = 0 ; i < prev_size; ++i){ //copy temp back to data
         data[i] = temp[i];
-        std::cout << data[i];
-
     }
-    std::cout <<"\n";
     for(int i = prev_size; i < size; ++i){ //initialize the rest of the array w 0
         data[i] = 0;
     }
-
 }
 
 template <typename T>
@@ -363,6 +355,7 @@ void sd_al<T>::deallocate_array(void)
 
     for(int i = 0 ; i < prev_size; ++i){ //copy the contents of data to temp
         temp[i] = data[i];
+        data[i] = 0;
     }
 
     size = 0.75 * prev_size;//will this work?
@@ -370,9 +363,8 @@ void sd_al<T>::deallocate_array(void)
 
     for(int i = 0 ; i < prev_size; ++i){ //copy temp back to data
         data[i] = temp[i];
-        std::cout << data[i];
     }
-    std::cout << "\n";
+    //this might b redundant
     for(int i = prev_size; i < size; ++i){ //initialize the rest of the array w 0
         data[i] = 0;
     }
