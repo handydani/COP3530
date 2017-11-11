@@ -174,6 +174,7 @@ int main()
     cd_al<int> CDALList(0);
 
     CDALList.print();
+    std::cout << "------testing pushing back of list and dynamic resizing------"<<std::endl;
 
     int i = 0;
     while(i != 50){
@@ -182,6 +183,53 @@ int main()
     }
     CDALList.print();
     std::cout << CDALList.length()<<"\n";
+    std::cout << CDALList.node_ctr()<<"\n";
+
+    i = 50;
+    while(i != 100){
+        CDALList.push_back(i);
+        i++;
+    }
+    CDALList.print();
+
+
+    i = 100;
+    while(i != 150){
+        CDALList.push_back(i);
+        i++;
+    }
+    CDALList.print();
+    std::cout << CDALList.length()<<"\n";
+    std::cout << CDALList.node_ctr()<<"\n";
+
+    std::cout << "------testing clearing of list------"<<std::endl;
+
+    CDALList.clear();
+    CDALList.print();
+
+
+    std::cout << "------testing pushing to the front of the list------"<<std::endl;
+    cd_al<int> NewCDALList(0);
+
+    NewCDALList.push_back(1);
+    NewCDALList.push_back(1);
+    NewCDALList.push_back(1);
+    NewCDALList.push_back(1);
+    NewCDALList.push_back(1);
+    NewCDALList.print();
+    NewCDALList.push_front(2);
+    NewCDALList.push_front(2);
+    NewCDALList.push_front(2);
+    NewCDALList.push_front(2);
+    NewCDALList.print();
+    NewCDALList.clear();
+
+    NewCDALList.push_front(3);
+    NewCDALList.push_front(3);
+    NewCDALList.push_front(3);
+
+    NewCDALList.push_front(3);
+    NewCDALList.print();
 
     return 0;
 }

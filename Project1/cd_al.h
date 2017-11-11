@@ -36,13 +36,11 @@ class cd_al : public adt_ll<T>
         void contains( T element /*equals_function*/) override;
         void print() override;
         T * contents() override;
-
+        size_t node_ctr();
+        void create_node(void);
 
     private:
         Node_CDAL <T> * head;
-        Node_CDAL <T> * mid;
-
-        Node_CDAL <T> * last;
         size_t tail;
 
 };
@@ -57,9 +55,7 @@ template <typename T>
 cd_al<T>::cd_al(int i)
 {
     head = new Node_CDAL<T>;
-    last = new Node_CDAL<T>;
-    head->next = last;
-    last->next = NULL;
+    head->next = NULL;
     tail = 0;
 }
 template <typename T>
@@ -124,22 +120,127 @@ void cd_al<T>::insert(T element, size_t position)
 template <typename T>
 void cd_al<T>::push_back(T element)
 {
-    if (tail != 50 ){
-        (head->data)[tail] = element;
-        ++tail;
-        return;
+    //tail must be less than 50
+    //item must be pushed to the first node, next nodes, and the last node,
+    if (tail < 50){
+        //you don't have to create a new node
+        Node_CDAL <T> * itr = head;
+        Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+
+        while(itr){
+            prev_node = itr;
+            itr = itr->next;
+        }
+
+        (prev_node->data)[tail] = element;
     }
     else{
-
         Node_CDAL <T> * new_node = new Node_CDAL<T>;
-        head->next = new_node;
-        last->next = nullptr;
+        Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+        Node_CDAL <T> * itr = new Node_CDAL<T>;
+        //set itr to represent the head
+        itr = head;
 
+        //cycle through the list until you reach the end, O(n)
+        while(itr){
+            //make prev_node represent the last node
+            prev_node = itr;
+            itr = itr->next;
+        }
+
+        //write data to the new node
+        tail = 0;
+        (new_node->data)[tail] = element;
+
+        //if the list isn't empty
+        if(prev_node){
+            //make the last node point to the new node
+            prev_node->next = new_node;
+        }
+        //if the list is empty
+        else{
+            //make the head point to the new node
+            head->next = new_node;
+        }
+        new_node->next = nullptr;
     }
+
+    //TODO check for cases in which pushing to the back fails
+    ++tail;
 }
 template <typename T>
 void cd_al<T>::push_front(T element)
 {
+    //there is more than one node
+    //the tail is = to 50
+    /*
+        00: copy contents as normal and shift down
+        01: create new node and copy contents to an array and shift down
+        10: copy contents to an array and shift down
+        11: create new node and copy contents to an array and shift down
+    */
+    if(tail < 50)
+    {
+        //create new node, copy contents and shift down
+    }
+    else if(node_ctr() > 1 && tail < 50)
+    {
+//
+//  _                 _                         _
+// | |__   ___   ___ | | ___ __ ___   __ _ _ __| | __
+// | '_ \ / _ \ / _ \| |/ / '_ ` _ \ / _` | '__| |/ /
+// | |_) | (_) | (_) |   <| | | | | | (_| | |  |   <
+// |_.__/ \___/ \___/|_|\_\_| |_| |_|\__,_|_|  |_|\_\
+//
+
+        //find last node, copy contents to an array and shift down
+        Node_CDAL <T> * new_node = new Node_CDAL<T>;
+        Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+        Node_CDAL <T> * itr = head;
+
+        //cycle through the list until you reach the end, O(n)
+        while(itr){
+            //make prev_node represent the last node
+            prev_node = itr;
+            itr = itr->next;
+        }
+
+        //if the list isn't empty
+        if(prev_node){
+            //make the last node point to the new node
+            prev_node->next = new_node;
+        }
+        //if the list is empty
+        else{
+            //make the head point to the new node
+            head->next = new_node;
+        }
+        new_node->next = nullptr;
+
+        T * content_array = new T[length()];
+        for(int i = 0; i < length(); ++i){
+            content_array[i] = (new_node->data)[i];
+        }
+        new_node->data[0] = element;
+        for(int i = 1; i < length(); ++i){
+            (new_node->data)[i] = content_array[i-1];
+        }
+
+    }
+    else
+    {
+        //shift data of head down
+        //copy contents to an array
+        T * content_array = new T[length()];
+        for(int i = 0; i < length(); ++i){
+            content_array[i] = (head->data)[i];
+        }
+        head->data[0] = element;
+        for(int i = 1; i < length(); ++i){
+            (head->data)[i] = content_array[i-1];
+        }
+    }
+    return;
     //if tail == 49
         // allocate new array and new node
 
@@ -359,14 +460,19 @@ size_t cd_al<T>::length(void)
 template <typename T>
 void cd_al<T>::clear(void)
 {
-    //COMPLETE
-    // while(head){
-    //     head->data = NULL;
-    //     head = head->next;
-    // }
-    // tail->data = NULL;
-    // head = new Node<T>;
-    // tail = new Node<T>;
+
+    Node_CDAL <T> * itr = head;
+
+    while(itr){
+        delete[] itr->data;
+        itr = itr->next;
+    }
+
+    head = new Node_CDAL<T>;
+    head->next = nullptr;
+
+
+    return;
 }
 template <typename T>
 void cd_al<T>::contains( T element/*, bool &equals_function()*/)
@@ -414,4 +520,52 @@ void cd_al<T>::print()
     }
 
     std::cout <<"\n";
+}
+//HELPER functions
+template <typename T>
+size_t cd_al<T>::node_ctr(void)
+{
+    size_t ctr = 0;
+    Node_CDAL <T> * itr = head;
+
+    while(itr){
+        ctr++;
+        itr = itr->next;
+    }
+    return ctr;
+
+}
+template <typename T>
+void cd_al<T>::create_node(void)
+{
+    Node_CDAL <T> * new_node = new Node_CDAL<T>;
+    Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+    Node_CDAL <T> * curr_node = new Node_CDAL<T>;
+    //set curr_node to represent the head
+    curr_node = head;
+
+    //cycle through the list until you reach the end, O(n)
+    while(curr_node){
+        //make prev_node represent the last node
+        prev_node = curr_node;
+        curr_node = curr_node->next;
+    }
+
+    // //write data to the new node
+    // tail = 0;
+    // (new_node->data)[tail] = element;
+
+    //if the list isn't empty
+    if(prev_node){
+        //make the last node point to the new node
+        prev_node->next = new_node;
+    }
+    //if the list is empty
+    else{
+        //make the head point to the new node
+        head->next = new_node;
+    }
+    new_node->next = nullptr;
+
+    tail = 0;
 }
