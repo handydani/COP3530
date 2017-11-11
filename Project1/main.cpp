@@ -218,18 +218,77 @@ int main()
     NewCDALList.push_back(1);
     NewCDALList.print();
     NewCDALList.push_front(2);
-    NewCDALList.push_front(2);
-    NewCDALList.push_front(2);
-    NewCDALList.push_front(2);
+
+    NewCDALList.push_front(3);
+
+    NewCDALList.push_front(4);
+
+    NewCDALList.push_front(5);
     NewCDALList.print();
+    NewCDALList.push_front(3);
+    NewCDALList.push_front(3);
+    NewCDALList.push_front(3);
+    NewCDALList.push_front(3);
+    NewCDALList.print();
+
+    i = 0;
+    while(i != 86){
+        NewCDALList.push_back(i);
+        i++;
+    }
+    NewCDALList.push_front(5);
+    NewCDALList.push_front(5);
+    NewCDALList.print();
+
+
+    std::cout << "------testing the length of the list------"<<std::endl;
+
+    std::cout << "The length is: "<< NewCDALList.length() <<"\n";
     NewCDALList.clear();
+    std::cout << "The length is: "<< NewCDALList.length() << "\n";
 
-    NewCDALList.push_front(3);
-    NewCDALList.push_front(3);
-    NewCDALList.push_front(3);
-
-    NewCDALList.push_front(3);
+    std::cout << "------testing popping the back of the list------"<<std::endl;
+    i = 0;
+    while(i != 38){
+        NewCDALList.push_back(i);
+        i++;
+    }
     NewCDALList.print();
+    NewCDALList.pop_back();
+    NewCDALList.print();
+
+    while(i != 75){
+        NewCDALList.push_back(i);
+        i++;
+    }
+    NewCDALList.print();
+
+    NewCDALList.pop_back();
+    NewCDALList.print();
+
+
+    std::cout << "------testing popping the front of the list------"<<std::endl;
+    NewCDALList.print();
+    NewCDALList.pop_front();
+    NewCDALList.print();
+
+    i = 0;
+    while(i != 21){
+        NewCDALList.pop_front();
+        i++;
+    }
+    NewCDALList.print();
+    NewCDALList.pop_front();
+    NewCDALList.print();
+    NewCDALList.pop_front();
+    NewCDALList.print();
+
+    NewCDALList.push_back(37);
+    NewCDALList.push_back(37);
+    NewCDALList.push_back(37);
+    NewCDALList.print();
+
+    std::cout << "------testing insertion of the list------"<<std::endl;
 
     return 0;
 }

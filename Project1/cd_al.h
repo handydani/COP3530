@@ -44,7 +44,7 @@ class cd_al : public adt_ll<T>
         size_t tail;
 
 };
-
+//TODO check for redundancies with contents() function and creating a new node
 //                      _                   _
 //   ___ ___  _ __  ___| |_ _ __ _   _  ___| |_ ___  _ __
 //  / __/ _ \| '_ \/ __| __| '__| | | |/ __| __/ _ \| '__|
@@ -83,39 +83,30 @@ cd_al<T>::~cd_al()
 template <typename T>
 void cd_al<T>::insert(T element, size_t position)
 {
-    //COMPLETE
-    // if(position == 0)
-    // {
-    //     push_front(element);
-    //     return;
-    // }
-    // else if (position + 1 == length())
-    // {
-    //     push_back(element);
-    //     return;
-    // }
-    // else if (position > length())
-    // {
-    //     std::domain_error d("The position requested does not exist");
-    //     throw d;
-    // }
-    // else
-    // {
-    //     Node<T> * itr = new Node<T>;
-    //     Node<T> * prev = new Node<T>;
-    //
-    //     itr = head;
-    //     while(position + 1){
-    //         prev = itr;
-    //         itr = itr->next;
-    //         --position;
-    //     }
-    //     Node<T> * new_node = new Node<T>;
-    //     // new_node = itr;
-    //     prev->next = new_node;
-    //     new_node->data = element;
-    //     new_node->next = itr;
-    // }
+    COMPLETE
+    if(position == 0)
+    {
+        push_front(element);
+        return;
+    }
+    else if (position + 1 == length()) //check edge cases
+    {
+        push_back(element);
+        return;
+    }
+    else if (position > length())
+    {
+        std::domain_error d("The position requested does not exist");
+        throw d;
+    }
+    else
+    {
+        if(tail == 50){
+            //new node is needed
+
+        }
+        //hot garbage 
+    }
 }
 template <typename T>
 void cd_al<T>::push_back(T element)
@@ -123,7 +114,6 @@ void cd_al<T>::push_back(T element)
     //tail must be less than 50
     //item must be pushed to the first node, next nodes, and the last node,
     if (tail < 50){
-        //you don't have to create a new node
         Node_CDAL <T> * itr = head;
         Node_CDAL <T> * prev_node = new Node_CDAL<T>;
 
@@ -171,40 +161,24 @@ void cd_al<T>::push_back(T element)
 template <typename T>
 void cd_al<T>::push_front(T element)
 {
-    //there is more than one node
-    //the tail is = to 50
-    /*
-        00: copy contents as normal and shift down
-        01: create new node and copy contents to an array and shift down
-        10: copy contents to an array and shift down
-        11: create new node and copy contents to an array and shift down
-    */
-    if(tail < 50)
+    if(tail == 50)
     {
-        //create new node, copy contents and shift down
-    }
-    else if(node_ctr() > 1 && tail < 50)
-    {
-//
-//  _                 _                         _
-// | |__   ___   ___ | | ___ __ ___   __ _ _ __| | __
-// | '_ \ / _ \ / _ \| |/ / '_ ` _ \ / _` | '__| |/ /
-// | |_) | (_) | (_) |   <| | | | | | (_| | |  |   <
-// |_.__/ \___/ \___/|_|\_\_| |_| |_|\__,_|_|  |_|\_\
-//
+        // tail = 50
+        // new node must be added
+        // copy element and contents to array[0->length()]
+        // copy array contents back to the nodes
+        // tail = 1
 
         //find last node, copy contents to an array and shift down
         Node_CDAL <T> * new_node = new Node_CDAL<T>;
         Node_CDAL <T> * prev_node = new Node_CDAL<T>;
         Node_CDAL <T> * itr = head;
-
         //cycle through the list until you reach the end, O(n)
         while(itr){
             //make prev_node represent the last node
             prev_node = itr;
             itr = itr->next;
         }
-
         //if the list isn't empty
         if(prev_node){
             //make the last node point to the new node
@@ -216,62 +190,45 @@ void cd_al<T>::push_front(T element)
             head->next = new_node;
         }
         new_node->next = nullptr;
-
-        T * content_array = new T[length()];
-        for(int i = 0; i < length(); ++i){
-            content_array[i] = (new_node->data)[i];
-        }
-        new_node->data[0] = element;
-        for(int i = 1; i < length(); ++i){
-            (new_node->data)[i] = content_array[i-1];
-        }
-
+        tail = 0;
     }
-    else
-    {
-        //shift data of head down
-        //copy contents to an array
-        T * content_array = new T[length()];
-        for(int i = 0; i < length(); ++i){
-            content_array[i] = (head->data)[i];
+
+
+    T * content_array = new T[node_ctr() * 50];
+    Node_CDAL <T> * itr = head;
+    content_array[0] = element; //adding element to content_array
+
+    //while loop to iterate through each node and a for loop to iterate through each array
+    unsigned int ca_index_start = 1;
+    unsigned int ca_index_end = 50; //these variables are updated so that the content array will be accessed at the right points
+
+    while(itr){
+        for(int i = ca_index_start, j = 0; j < 50; ++i, ++j){ // i = [1, 50], j = [0, 49]; i = [51, 99], j = [0,49]
+            content_array[i] = (itr->data)[j];
         }
-        head->data[0] = element;
-        for(int i = 1; i < length(); ++i){
-            (head->data)[i] = content_array[i-1];
-        }
+        ca_index_start = ca_index_end + 1;
+        ca_index_end += 50;
+        itr = itr->next;
     }
+    //at this point content_array should contain all of the contents
+
+    //reset variables
+    itr = head;
+    ca_index_start = 0;
+    ca_index_end = 50;
+
+    //copying content array back to the nodes with the element
+    while(itr){
+        for(int i = 0, j = ca_index_start; i < 50; ++i, ++j){
+            (itr->data)[i] = content_array[j];
+        }
+        ca_index_start = ca_index_end;
+        ca_index_end += 50;
+        itr = itr->next;
+    }
+
+    ++tail; //TODO check for cases in which pushing to the front fails?
     return;
-    //if tail == 49
-        // allocate new array and new node
-
-    // create array of size n + 1
-    // copy contents
-    //COMPLETE
-    // Node <T> * new_node = new Node<T>;
-    // Node <T> * next_node = new Node<T>;
-    //
-    // //write data to the new node
-    // new_node->data = element;
-    //
-    // //If there exists something which head points to
-    // if(head->next){
-    //     //the first node is saved to next node
-    //     next_node = head->next;
-    //     //the next pointer of the new node now points to the prev first node
-    //     new_node->next = next_node;
-    //     //head now points to the new node
-    //     head->next = new_node;
-    // }
-    // //if the list is empty
-    // else{
-    //     //head now points to the new node
-    //     head->next = new_node;
-    //     //the tail becomes the new node
-    //     tail = new_node;
-    //     //after the tail it's null
-    //     tail->next = nullptr;
-    // }
-    // return;
 }
 template <typename T>
 T cd_al<T>::replace( T element, size_t position)
@@ -353,75 +310,125 @@ T cd_al<T>::remove(size_t position)
 template <typename T>
 T cd_al<T>::pop_back(void)
 {
-    //COMPLETE
-    // T popped;
-    // Node <T> * last_node = new Node<T>;
-    // Node <T> * prev_node = new Node<T>;
-    //
-    // //traverse the list leaving prev one behind last
-    // last_node = head;
-    // while(last_node->next){
-    //     prev_node = last_node;
-    //     last_node = last_node->next;
-    // }
-    // //popped now contains the data to be deleted
-    // popped = last_node->data;
-    //
-    // //tail is the previous which now points to null
-    // tail = prev_node;
-    // tail->next = nullptr;
-    //
-    // //zeroing out the data
-    // last_node->data = NULL;
-    // last_node->next = nullptr;
-    // //deleting
-    // delete last_node;
-    //
-    // return popped;
+    //TODO throw error if trying to pop an empty list
+    T popped;
+    Node_CDAL <T> * itr = head;
+    while(itr->next){
+        itr = itr->next;
+    }
+    popped = (itr->data)[tail - 1];
+    (itr->data)[tail - 1] = 0;
+    if(tail > 1)
+        --tail;
+    else{
+        tail = 50;
+        Node_CDAL <T> * last_node = head;
+        Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+
+        //traverse the list leaving prev one behind last
+        last_node = head;
+        while(last_node->next){
+            prev_node = last_node;
+            last_node = last_node->next;
+        }
+        prev_node->next = nullptr;
+
+        //zeroing out the data
+        last_node->data = NULL;
+        last_node->next = nullptr;
+        //deleting
+        delete last_node;
+
+    }
+
+    return popped;
 
 }
 template <typename T>
 T cd_al<T>::pop_front(void)
 {
-    //COMPLETE
-    // T popped;
-    // Node <T> * first_node = new Node<T>;
-    //
-    // first_node = head->next;
-    // popped = first_node->data;
-    //
-    // head->next = first_node->next;
-    //
-    // return popped;
+    T popped = (head->data)[0];
+
+    T * content_array = new T[node_ctr() * 50];
+    Node_CDAL <T> * itr = head;
+
+    //while loop to iterate through each node and a for loop to iterate through each array
+    unsigned int ca_index_start = 0;
+    unsigned int ca_index_end = 50; //these variables are updated so that the content array will be accessed at the right points
+
+    while(itr){
+        for(int i = ca_index_start, j = 0; j < 50; ++i, ++j){ // i = [0, 49], j = [0, 49]; i = [51, 99], j = [0,49]
+            content_array[i] = (itr->data)[j];
+        }
+        ca_index_start = ca_index_end;
+        ca_index_end += 50;
+        itr = itr->next;
+    }
+    //at this point content_array should contain all of the contents
+
+    //reset variables
+    itr = head;
+    ca_index_start = 1;
+    ca_index_end = 50;
+
+    //copying content array back to the nodes with the element
+    while(itr){
+        for(int i = 0, j = ca_index_start; i < 50; ++i, ++j){ //i = [0, 49], j = [1, 50]; i = [0, 49], j = [51, 100]
+            (itr->data)[i] = content_array[j];
+        }
+        ca_index_start = ca_index_end + 1;
+        ca_index_end += 50;
+        itr = itr->next;
+    }
+
+    if(tail > 1)
+        --tail;
+    else{
+        tail = 50;
+        Node_CDAL <T> * last_node = head;
+        Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+
+        //traverse the list leaving prev one behind last
+        last_node = head;
+        while(last_node->next){
+            prev_node = last_node;
+            last_node = last_node->next;
+        }
+        prev_node->next = nullptr;
+
+        //zeroing out the data
+        last_node->data = NULL;
+        last_node->next = nullptr;
+        //deleting
+        delete last_node;
+
+    }
+
+
+
+    return popped;
 
 }
 template <typename T>
 T cd_al<T>::peek_back(void)
 {
-    //COMPLETE
-    // T peeked;
-    // if(tail){
-    //     peeked = tail->data;
-    // }
-    // else{
-    //     peeked = 0;
-    // }
-    //
-    // return peeked;
+    //TODO CHECK
+    Node_CDAL <T> * itr = head;
+    T peeked = 0;
+
+    while(itr->next){
+        itr = itr->next;
+    }
+    peeked = (itr->data)[tail];
+
+    return peeked;
 }
 template <typename T>
 T cd_al<T>::peek_front(void)
 {
-    //COMPLETE
-    // T peeked;
-    // if(head->next){
-    //     peeked = (head->next)->data;
-    // }
-    // else{
-    //     peeked = 0;
-    // }
-    //
-    // return peeked;
+    //TODO CHECK
+    T peeked = (head->data)[0];
+    return peeked;
 }
 template <typename T>
 bool cd_al<T>::is_empty(void)
@@ -448,11 +455,16 @@ size_t cd_al<T>::length(void)
     size_t length = 0;
     Node_CDAL <T> * itr = head;
 
-    while(itr){
+    while(itr->next){
         for (int i = 0; i < 50; ++i){
             length++;
         }
         itr = itr->next;
+    }
+    int i = tail;
+    while(i){
+        length++;
+        i--;
     }
     return length;
 
@@ -470,7 +482,7 @@ void cd_al<T>::clear(void)
 
     head = new Node_CDAL<T>;
     head->next = nullptr;
-
+    tail = 0;
 
     return;
 }
@@ -521,7 +533,14 @@ void cd_al<T>::print()
 
     std::cout <<"\n";
 }
-//HELPER functions
+// _____________
+// < helper fxns >
+// -------------
+//        \   ^__^
+//         \  (oo)\_______
+//            (__)\       )\/\
+//                ||----w |
+//                ||     ||
 template <typename T>
 size_t cd_al<T>::node_ctr(void)
 {
