@@ -83,15 +83,10 @@ cd_al<T>::~cd_al()
 template <typename T>
 void cd_al<T>::insert(T element, size_t position)
 {
-    COMPLETE
+    // COMPLETE
     if(position == 0)
     {
         push_front(element);
-        return;
-    }
-    else if (position + 1 == length()) //check edge cases
-    {
-        push_back(element);
         return;
     }
     else if (position > length())
@@ -101,11 +96,77 @@ void cd_al<T>::insert(T element, size_t position)
     }
     else
     {
-        if(tail == 50){
+        if(tail == 50)
+        {
             //new node is needed
+            // tail = 50
+            // new node must be added
+            // copy element and contents to array[0->length()]
+            // copy array contents back to the nodes
 
+            //find last node, copy contents to an array and shift down
+            Node_CDAL <T> * new_node = new Node_CDAL<T>;
+            Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+            Node_CDAL <T> * itr = head;
+            //cycle through the list until you reach the end, O(n)
+            while(itr){
+                //make prev_node represent the last node
+                prev_node = itr;
+                itr = itr->next;
+            }
+            //if the list isn't empty
+            if(prev_node){
+                //make the last node point to the new node
+                prev_node->next = new_node;
+            }
+            //if the list is empty
+            else{
+                //make the head point to the new node
+                head->next = new_node;
+            }
+            new_node->next = nullptr;
+            tail = 0;
         }
-        //hot garbage 
+
+        T * content_array = new T[node_ctr() * 50];
+        Node_CDAL <T> * itr = head;
+
+        //while loop to iterate through each node and a for loop to iterate through each array
+        unsigned int ca_index_start = 0;
+        unsigned int ca_index_end = 50; //these variables are updated so that the content array will be accessed at the right points
+
+        while(itr){
+            for(int i = ca_index_start, j = 0; j < 50; ++i, ++j){ // i = [0, 49], j = [0, 49]; i = [50, 99], j = [0,49]
+                content_array[i] = (itr->data)[j];
+            }
+            ca_index_start = ca_index_end;
+            ca_index_end += 50;
+            itr = itr->next;
+        }
+        //at this point content_array should contain all of the contents
+
+        for(int i = length() + 1; i >= position; --i){
+            content_array[i] = content_array[i-1];
+        }
+
+        content_array[position] = element;
+        //reset variables
+        itr = head;
+        ca_index_start = 0;
+        ca_index_end = 50;
+
+        //copying content array back to the nodes with the element
+        while(itr){
+            for(int i = 0, j = ca_index_start; i < 50; ++i, ++j){
+                (itr->data)[i] = content_array[j];
+            }
+            ca_index_start = ca_index_end;
+            ca_index_end += 50;
+            itr = itr->next;
+        }
+
+        ++tail;
+        return;
     }
 }
 template <typename T>
@@ -233,79 +294,128 @@ void cd_al<T>::push_front(T element)
 template <typename T>
 T cd_al<T>::replace( T element, size_t position)
 {
-    //COMPLETE
-    // T replaced;
-    // if(position == 0){
-    //     replaced = pop_front();
-    //     push_front(element);
-    // }
-    // else if(position + 1 == length()){
-    //     replaced = pop_back();
-    //     push_back(element);
-    // }
-    // else if (position + 1 > length()){
-    //     std::domain_error d("The position requested does not exist");
-    //     throw d;
-    // }
-    // else{
-    //
-    //     replaced = remove(position);
-    //
-    //     Node<T> * itr = new Node<T>;
-    //     Node<T> * prev = new Node<T>;
-    //
-    //     itr = head;
-    //     while(position + 1){
-    //         prev = itr;
-    //         itr = itr->next;
-    //         --position;
-    //     }
-    //     Node<T> * new_node = new Node<T>;
-    //     // new_node = itr;
-    //     prev->next = new_node;
-    //     new_node->data = element;
-    //     new_node->next = itr;
-    // }
-    // return replaced;
+    T replaced;
+    if (position + 1 > length()){
+        std::domain_error d("The position requested does not exist");
+        throw d;
+    }
+    else{
+
+        T * content_array = new T[node_ctr() * 50];
+        Node_CDAL <T> * itr = head;
+
+        //while loop to iterate through each node and a for loop to iterate through each array
+        unsigned int ca_index_start = 0;
+        unsigned int ca_index_end = 50; //these variables are updated so that the content array will be accessed at the right points
+
+        while(itr){
+            for(int i = ca_index_start, j = 0; j < 50; ++i, ++j){ // i = [0, 49], j = [0, 49]; i = [50, 99], j = [0,49]
+                content_array[i] = (itr->data)[j];
+            }
+            ca_index_start = ca_index_end;
+            ca_index_end += 50;
+            itr = itr->next;
+        }
+        //at this point content_array should contain all of the contents
+        replaced = content_array[position];
+        content_array[position] = element;
+        //copy back
+        //reset variables
+        itr = head;
+        ca_index_start = 0;
+        ca_index_end = 50;
+
+        //copying content array back to the nodes with the element
+        while(itr){
+            for(int i = 0, j = ca_index_start; i < 50; ++i, ++j){
+                (itr->data)[i] = content_array[j];
+            }
+            ca_index_start = ca_index_end;
+            ca_index_end += 50;
+            itr = itr->next;
+        }
+
+    }
+    return replaced;
 }
 template <typename T>
 T cd_al<T>::remove(size_t position)
 {
-    //COMPLETE
-    // T removed;
-    // if(position == 0)
-    // {
-    //     removed = pop_front();
-    // }
-    // else if (position + 1 == length())
-    // {
-    //     removed = pop_back();
-    // }
-    // else if (position + 1 > length())
-    // {
-    //     std::domain_error d("The position requested does not exist");
-    //     throw d;
-    // }
-    // else
-    // {
-    //     Node<T> * itr = new Node<T>;
-    //     Node<T> * prev = new Node<T>;
-    //
-    //     itr = head->next;
-    //     prev = head;
-    //     while(position){
-    //         itr = itr->next;
-    //         prev = prev->next;
-    //         --position;
-    //     }
-    //
-    //     removed = itr->data;
-    //     prev->next = itr->next;
-    //     itr->next = nullptr;
-    //     itr->data = NULL;
-    //     delete itr;
-    // }
-    // return removed;
+    T removed = 0;
+    if(position == 0)
+    {
+        removed = pop_front();
+    }
+    else if (position + 1 == length())
+    {
+        removed = pop_back();
+    }
+    else if (position + 1 > length())
+    {
+        std::domain_error d("The position requested does not exist");
+        throw d;
+    }
+    else
+    {
+        T * content_array = new T[node_ctr() * 50];
+        Node_CDAL <T> * itr = head;
+
+        //while loop to iterate through each node and a for loop to iterate through each array
+        unsigned int ca_index_start = 0;
+        unsigned int ca_index_end = 50; //these variables are updated so that the content array will be accessed at the right points
+
+        while(itr){
+            for(int i = ca_index_start, j = 0; j < 50; ++i, ++j){ // i = [0, 49], j = [0, 49]; i = [50, 99], j = [0,49]
+                content_array[i] = (itr->data)[j];
+            }
+            ca_index_start = ca_index_end;
+            ca_index_end += 50;
+            itr = itr->next;
+        }
+        //at this point content_array should contain all of the contents
+        removed = content_array[position];
+        for(int i = position; i < length(); ++i){ //do you have to use length -1?
+            content_array[i] = content_array[i+1];
+        }
+
+        //reset variables
+        itr = head;
+        ca_index_start = 0;
+        ca_index_end = 50;
+
+        //copying content array back to the nodes with the element
+        while(itr){
+            for(int i = 0, j = ca_index_start; i < 50; ++i, ++j){
+                (itr->data)[i] = content_array[j];
+            }
+            ca_index_start = ca_index_end;
+            ca_index_end += 50;
+            itr = itr->next;
+        }
+
+        if(tail > 1)
+            --tail;
+        else{
+            tail = 50;
+            Node_CDAL <T> * last_node = head;
+            Node_CDAL <T> * prev_node = new Node_CDAL<T>;
+
+            //traverse the list leaving prev one behind last
+            last_node = head;
+            while(last_node->next){
+                prev_node = last_node;
+                last_node = last_node->next;
+            }
+            prev_node->next = nullptr;
+
+            //zeroing out the data
+            last_node->data = NULL;
+            last_node->next = nullptr;
+            //deleting
+            delete last_node;
+        }
+    }
+    return removed;
 }
 template <typename T>
 T cd_al<T>::pop_back(void)
@@ -338,7 +448,6 @@ T cd_al<T>::pop_back(void)
         last_node->next = nullptr;
         //deleting
         delete last_node;
-
     }
 
     return popped;
@@ -404,50 +513,37 @@ T cd_al<T>::pop_front(void)
 
     }
 
-
-
     return popped;
 
 }
 template <typename T>
 T cd_al<T>::peek_back(void)
 {
-    //TODO CHECK
     Node_CDAL <T> * itr = head;
     T peeked = 0;
 
     while(itr->next){
         itr = itr->next;
     }
-    peeked = (itr->data)[tail];
+    peeked = (itr->data)[tail - 1];
 
     return peeked;
 }
 template <typename T>
 T cd_al<T>::peek_front(void)
 {
-    //TODO CHECK
     T peeked = (head->data)[0];
     return peeked;
 }
 template <typename T>
 bool cd_al<T>::is_empty(void)
 {
-    //COMPLETE
-    // bool answer = false;
-    //
-    // if(!head->next)
-    // {
-    //     answer = true;
-    // }
-    //
-    // return answer;
+    return ((tail == 0) && (node_ctr() == 1));
 }
 template <typename T>
 bool cd_al<T>::is_full()
 {
-    //COMPLETE
-    // return false;
+    return (tail == 50);
 }
 template <typename T>
 size_t cd_al<T>::length(void)
@@ -502,16 +598,23 @@ bool equals_function(T element1/*, T element2*/)
 template <typename T>
 T * cd_al<T>::contents()
 {
-    //COMPLETE
-    // T array [length()];
-    // Node <T> * itr = head->next;
-    //
-    // for (int i = 0; i < length(); i++){
-    //     array[i] = itr->data;
-    //     itr = itr->next;
-    // }
-    //
-    // return array;
+    T * content_array = new T[node_ctr() * 50];
+    Node_CDAL <T> * itr = head;
+
+    //while loop to iterate through each node and a for loop to iterate through each array
+    unsigned int ca_index_start = 0;
+    unsigned int ca_index_end = 50; //these variables are updated so that the content array will be accessed at the right points
+
+    while(itr){
+        for(int i = ca_index_start, j = 0; j < 50; ++i, ++j){ // i = [0, 49], j = [0, 49]; i = [50, 99], j = [0,49]
+            content_array[i] = (itr->data)[j];
+        }
+        ca_index_start = ca_index_end;
+        ca_index_end += 50;
+        itr = itr->next;
+    }
+
+    return &content_array[0];
 }
 
 template <typename T>

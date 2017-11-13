@@ -289,6 +289,88 @@ int main()
     NewCDALList.print();
 
     std::cout << "------testing insertion of the list------"<<std::endl;
+    NewCDALList.insert(37, 4);
+    NewCDALList.print();
+    NewCDALList.insert(37, 0);
+    NewCDALList.print();
+    NewCDALList.insert(100, 53);
+    NewCDALList.print();
+    i = 0;
+    while(i != 45){
+        NewCDALList.push_back(i);
+        i++;
+    }
+    NewCDALList.print();
+    NewCDALList.insert(74, 20);
+    NewCDALList.print();
+    NewCDALList.insert(74, 100);
+    NewCDALList.print();
+    NewCDALList.insert(100, 0);
+    NewCDALList.print();
+    std::cout << "------testing removal of the list------"<<std::endl;
+    NewCDALList.remove(0);
+    NewCDALList.print();
+    std::cout <<"the length is " << NewCDALList.length()<<"\n";
+    NewCDALList.remove(NewCDALList.length()-1);
+    NewCDALList.print();
+    std::cout <<"the length is " << NewCDALList.length()<<"\n";
 
+    NewCDALList.remove(5);
+    NewCDALList.print();
+    std::cout <<"the length is " << NewCDALList.length()<<"\n";
+    std::cout << "------testing replacement of the list------"<<std::endl;
+
+    NewCDALList.replace(100, 0);
+    NewCDALList.print();
+
+    NewCDALList.replace(100, 25);
+    NewCDALList.print();
+
+    NewCDALList.replace(100, NewCDALList.length()-1);
+    NewCDALList.print();
+
+    std::cout << "------testing peeking of the list------"<<std::endl;
+
+    std::cout << "the back of the list is: "<< NewCDALList.peek_back()<<"\n";
+    std::cout << "the front of the list is: "<< NewCDALList.peek_front()<<"\n";
+
+    std::cout << "------testing emptiness of the list------"<<std::endl;
+
+    std::cout << "Is the list empty? "<< NewCDALList.is_empty()<<"\n";
+    NewCDALList.clear();
+    std::cout << "Is the list empty? "<< NewCDALList.is_empty()<<"\n";
+
+    std::cout << "------testing fullness of list------"<<std::endl;
+
+    std::cout << "Is the list full? "<< NewCDALList.is_full()<<"\n";
+    i = 0;
+    while(i != 50){
+        NewCDALList.push_back(50-i);
+        i++;
+    }
+    std::cout << "Is the list full? "<< NewCDALList.is_full()<<"\n";
+
+    std::cout << "------testing contents of list------"<<std::endl;
+
+    int * array_pointer_CDAL = NewCDALList.contents();
+
+    for(int i = 0; i < NewCDALList.length(); ++i){
+        std::cout << array_pointer_CDAL[i]<<"->";
+    }
+    std::cout <<"\n";
+
+
+    std::cout << "------testing pushing 0------"<<std::endl;
+    NewCDALList.clear();
+    i = 0;
+    while(i != 50){
+        NewCDALList.push_back(0);
+        i++;
+    }
+    std::cout <<"the length is "<< NewCDALList.length();
+    std::cout <<"\n";
+    NewCDALList.print();
+    NewCDALList.clear();
+    NewCDALList.print();
     return 0;
 }
