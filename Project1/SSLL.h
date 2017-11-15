@@ -1,48 +1,52 @@
-//ps_ll
-#include "adt_ll.h"
-#include "node.h"
+//SSLL
+#include "List.h"
 #include <iostream>
-// cop3530::PSLL<E>::PSLL(const size_t init_pool = 50) :
-// pool_size(init_pool){//constructor stuff}
-using namespace cop3530;
-// _________________________
-// < pool singly linked list >
-// -------------------------
+#include "node.h"
+#include <stdexcept>
+namespace cop3530 {
+// ___________________________
+// < simple singly linked list >
+// ---------------------------
 //        \   ^__^
 //         \  (oo)\_______
 //            (__)\       )\/\
 //                ||----w |
 //                ||     ||
+
 template <typename T>
-class ps_ll : public adt_ll<T>
+class SSLL : public List<T>
 {
-public:
-    ps_ll(int i);
-    ~ ps_ll ();
+    public:
+        SSLL(void);
+        SSLL(const SSLL&); //copy contructor
+        SSLL& operator =(const SSLL&); //copy assignment operator
+        //move constructor
+        //move assignment operator
+        ~ SSLL (); //destructor
 
-    void insert( T element, size_t position) override;
-    void push_back(T element) override;
-    void push_front(T element) override;
-    T replace( T element, size_t position) override;
-    T remove(size_t position) override;
-    T pop_back(void) override;
-    T pop_front(void) override;
-    T peek_back(void) override;
-    T peek_front(void) override;
-    bool is_empty(void) override;
-    bool is_full() override;
-    size_t length(void) override;
-    void clear(void) override;
-    void contains( T element /*equals_function*/) override;
-    void print() override;
-    T * contents() override;
+        void insert( T element, size_t position) override;
+        void push_back(T element) override;
+        void push_front(T element) override;
+        T replace( T element, size_t position) override;
+        T remove(size_t position) override;
+        T pop_back(void) override;
+        T pop_front(void) override;
+        T item_at(size_t position) override;
+        T peek_back(void) override;
+        T peek_front(void) override;
+        bool is_empty(void) override;
+        bool is_full() override;
+        size_t length(void) override;
+        void clear(void) override;
+        void contains( T element/*,  &f()*/) override;
+        void print(std::ostream &os) override;
+        T * contents() override;
+        // void f();
 
 
-private:
-    Node <T> * head;
-    Node <T> * tail;
-    Node <T> * free_list;
-    // Node <T> * last;
+    private:
+        Node <T> * head;
+        Node <T> * tail;
 
 
 };
@@ -54,27 +58,42 @@ private:
 //  \___\___/|_| |_|___/\__|_|   \__,_|\___|\__\___/|_|
 
 template <typename T>
-ps_ll<T>::ps_ll(int i)
+SSLL<T>::SSLL(void)
 {
     head = new Node<T>;
     tail = new Node<T>;
-    free_list = new Node<T>;
+}
+template <typename T>
+SSLL<T>::SSLL(const SSLL&orig) :
+head(orig.head), tail(orig.tail)
+{
 
 }
 template <typename T>
-ps_ll<T>::~ps_ll()
+SSLL<T>& SSLL<T>::operator =(const SSLL&rhs)
+{
+    // head = head.rhs;
+    // tail = tail.rhs;
+    return *this;
+}
+template <typename T>
+SSLL<T>::~SSLL()
 {
     //TODO find out how to destroy linked list
-    // bool finished = false;
-    // while(!finished)
-    // {
-    //     Node<T> * temp = new Node<T>;
-    //     temp = head;
-    //     temp = temp->next;
-    //     delete head;
-    // }
+    Node<T> * temp = new Node<T>;
+    Node<T> * next = new Node<T>;
+    temp = head;
+
+    while (temp)
+   {
+       next = temp->next;
+       free(temp);
+       temp = next;
+   }
+
 
 }
+
 //   __                  _   _
 //  / _|_   _ _ __   ___| |_(_) ___  _ __  ___
 // | |_| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
@@ -83,9 +102,9 @@ ps_ll<T>::~ps_ll()
 //
 
 template <typename T>
-void ps_ll<T>::insert(T element, size_t position)
+void SSLL<T>::insert(T element, size_t position)
 {
-    //TODO
+    //COMPLETE
     if(position == 0)
     {
         push_front(element);
@@ -120,9 +139,9 @@ void ps_ll<T>::insert(T element, size_t position)
     }
 }
 template <typename T>
-void ps_ll<T>::push_back(T element)
+void SSLL<T>::push_back(T element)
 {
-    //TODO
+    //COMPLETE
     if (!length()){
         push_front(element);
         return;
@@ -160,14 +179,9 @@ void ps_ll<T>::push_back(T element)
     tail->next = nullptr;
 }
 template <typename T>
-void ps_ll<T>::push_front(T element)
+void SSLL<T>::push_front(T element)
 {
-    //TODO
-    if(!free_list->next){
-        Node <T> new_node = new Node<T>;
-        free_list->next = new_node;
-        new_node->next = nullptr;
-    }
+    //COMPLETE
     Node <T> * new_node = new Node<T>;
     Node <T> * next_node = new Node<T>;
 
@@ -177,7 +191,7 @@ void ps_ll<T>::push_front(T element)
     //If there exists something which head points to
     if(head->next){
         //the first node is saved to next node
-        next_node = hsead->next;
+        next_node = head->next;
         //the next pointer of the new node now points to the prev first node
         new_node->next = next_node;
         //head now points to the new node
@@ -195,9 +209,9 @@ void ps_ll<T>::push_front(T element)
     return;
 }
 template <typename T>
-T ps_ll<T>::replace( T element, size_t position)
+T SSLL<T>::replace( T element, size_t position)
 {
-    //TODO
+    //COMPLETE
     T replaced;
     if(position == 0){
         replaced = pop_front();
@@ -233,9 +247,9 @@ T ps_ll<T>::replace( T element, size_t position)
     return replaced;
 }
 template <typename T>
-T ps_ll<T>::remove(size_t position)
+T SSLL<T>::remove(size_t position)
 {
-    //TODO
+    //COMPLETE
     T removed;
     if(position == 0)
     {
@@ -266,15 +280,15 @@ T ps_ll<T>::remove(size_t position)
         removed = itr->data;
         prev->next = itr->next;
         itr->next = nullptr;
-        itr->data = NULL;
+        itr->data = 0;
         delete itr;
     }
     return removed;
 }
 template <typename T>
-T ps_ll<T>::pop_back(void)
+T SSLL<T>::pop_back(void)
 {
-    //TODO
+    //COMPLETE
     T popped;
     Node <T> * last_node = new Node<T>;
     Node <T> * prev_node = new Node<T>;
@@ -293,7 +307,7 @@ T ps_ll<T>::pop_back(void)
     tail->next = nullptr;
 
     //zeroing out the data
-    last_node->data = NULL;
+    last_node->data = 0;
     last_node->next = nullptr;
     //deleting
     delete last_node;
@@ -302,9 +316,9 @@ T ps_ll<T>::pop_back(void)
 
 }
 template <typename T>
-T ps_ll<T>::pop_front(void)
+T SSLL<T>::pop_front(void)
 {
-    //TODO
+    //COMPLETE
     T popped;
     Node <T> * first_node = new Node<T>;
 
@@ -317,7 +331,27 @@ T ps_ll<T>::pop_front(void)
 
 }
 template <typename T>
-T ps_ll<T>::peek_back(void)
+T SSLL<T>::item_at(size_t position)
+{
+	//iterate through list until you get to a position
+	//TODO throw error if it's not there
+	Node <T> * itr = head->next;
+	T item = 0;
+	while (itr->next)
+    {
+		itr = itr->next;
+		--position;
+		if(position == 0){ //0 or negative 1
+			item = itr->data;
+			break;
+		}
+    }
+
+    return item;
+
+}
+template <typename T>
+T SSLL<T>::peek_back(void)
 {
     //COMPLETE
     T peeked;
@@ -331,7 +365,7 @@ T ps_ll<T>::peek_back(void)
     return peeked;
 }
 template <typename T>
-T ps_ll<T>::peek_front(void)
+T SSLL<T>::peek_front(void)
 {
     //COMPLETE
     T peeked;
@@ -345,7 +379,7 @@ T ps_ll<T>::peek_front(void)
     return peeked;
 }
 template <typename T>
-bool ps_ll<T>::is_empty(void)
+bool SSLL<T>::is_empty(void)
 {
     //COMPLETE
     bool answer = false;
@@ -358,13 +392,13 @@ bool ps_ll<T>::is_empty(void)
     return answer;
 }
 template <typename T>
-bool ps_ll<T>::is_full()
+bool SSLL<T>::is_full()
 {
     //COMPLETE
     return false;
 }
 template <typename T>
-size_t ps_ll<T>::length(void)
+size_t SSLL<T>::length(void)
 {
     //COMPLETE
     size_t length = 0;
@@ -377,19 +411,19 @@ size_t ps_ll<T>::length(void)
     return length;
 }
 template <typename T>
-void ps_ll<T>::clear(void)
+void SSLL<T>::clear(void)
 {
-    //TODO
+    //COMPLETE
     while(head){
-        head->data = NULL;
+        head->data = 0;
         head = head->next;
     }
-    tail->data = NULL;
+    tail->data = 0;
     head = new Node<T>;
     tail = new Node<T>;
 }
 template <typename T>
-void ps_ll<T>::contains( T element/*, bool &equals_function()*/)
+void SSLL<T>::contains( T element/*, bool &equals_function()*/)
 {
     //TODO
 
@@ -402,43 +436,34 @@ bool equals_function(T element1, T element2)
     return element1 == element2;
 }
 template <typename T>
-T * ps_ll<T>::contents()
+T * SSLL<T>::contents()
 {
-    //TODO FIX
-    T array [length()];
-    T * a;
-    //im sure theres a bug here
+    //COMPLETE
+    T * array = new T[length()];
     Node <T> * itr = head->next;
-    T i = 0;
 
-    while(itr)
-    {
+    for (int i = 0; i < length(); i++){
         array[i] = itr->data;
         itr = itr->next;
-        ++i;
     }
-    //
-    return a;
 
-    // int * a = newList.contents();
-    // std::cout << a[0] << std::endl;
-    // std::cout << a[1] << std::endl;
-    // std::cout << a[2] << std::endl;
+    return &array[0];
 }
 
 template <typename T>
-void ps_ll<T>::print()
+void SSLL<T>::print(std::ostream &os)
 {
     //COMPLETE
 	//temp ptr for itr
 	Node <T> * itr = head->next;
 
-	std::cout << "Simple Singly Linked List: ";
+	os << "Simple Singly Linked List: ";
 	// loop while itr != null
 	while (itr)
     {
-		std::cout << itr->data << "->";
+		os << itr->data << "->";
 		itr = itr->next;
     }
-    std::cout <<"\n";
+    os <<"\n";
+}
 }

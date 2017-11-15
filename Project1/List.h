@@ -23,11 +23,11 @@
 #include <iostream>
 namespace cop3530 {
 template <typename T>
-class adt_ll
+class List
 {
 
 public:
-    virtual ~adt_ll() {};
+    virtual ~List() {};
     virtual void insert( T element, size_t position) = 0;
     virtual void push_back(T element) = 0;
     virtual void push_front(T element) = 0;
@@ -35,14 +35,15 @@ public:
     virtual T remove(size_t position) = 0;
     virtual T pop_back(void) = 0;
     virtual T pop_front(void) = 0;
+    virtual T item_at(size_t position) = 0;
     virtual T peek_back(void) = 0;
     virtual T peek_front(void) = 0;
     virtual bool is_empty(void) = 0;
     virtual bool is_full(void) = 0;
     virtual size_t length(void) = 0;
     virtual void clear(void) = 0;
-    virtual void contains( T element /*equals_function*/) = 0;
-    virtual void print() = 0;
+    virtual void contains( T element/*, &f()*/) = 0;
+    virtual void print(std::ostream &os) = 0;
     virtual T* contents() = 0;
 
 };

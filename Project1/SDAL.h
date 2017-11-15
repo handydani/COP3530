@@ -1,5 +1,5 @@
-//sd_al
-#include "adt_ll.h"
+//SDAL
+#include "List.h"
 #include <iostream>
 #include "node.h"
 #include <stdexcept>
@@ -14,11 +14,11 @@ using namespace cop3530;
 //                ||     ||
 
 template <typename T>
-class sd_al : public adt_ll<T>
+class SDAL : public List<T>
 {
     public:
-        sd_al(size_t array_size);
-        ~ sd_al ();
+        SDAL(size_t array_size);
+        ~ SDAL ();
 
         void insert( T element, size_t position) override;
         void push_back(T element) override;
@@ -34,7 +34,7 @@ class sd_al : public adt_ll<T>
         size_t length(void) override;
         void clear(void) override;
         void contains( T element /*equals_function*/) override;
-        void print() override;
+        void print(std::ostream &os) override;
         T * contents() override;
         //my helper functions
         void deallocate_array(void);
@@ -62,7 +62,7 @@ class sd_al : public adt_ll<T>
 //  \___\___/|_| |_|___/\__|_|   \__,_|\___|\__\___/|_|
 
 template <typename T>
-sd_al<T>::sd_al(size_t array_size): data (new (std::nothrow) T[array_size])
+SDAL<T>::SDAL(size_t array_size): data (new (std::nothrow) T[array_size])
 {
     if (data == nullptr) {
         array_size = 50;
@@ -75,7 +75,7 @@ sd_al<T>::sd_al(size_t array_size): data (new (std::nothrow) T[array_size])
     tail = 0;
 }
 template <typename T>
-sd_al<T>::~sd_al()
+SDAL<T>::~SDAL()
 {
     delete[] data;
 }
@@ -88,7 +88,7 @@ sd_al<T>::~sd_al()
 //
 
 template <typename T>
-void sd_al<T>::insert(T element, size_t position)
+void SDAL<T>::insert(T element, size_t position)
 {
     //TODO check logic it seems like there's a lot of redundancies with the if statements
     //maybe consider a helper function to check isValid?
@@ -127,7 +127,7 @@ void sd_al<T>::insert(T element, size_t position)
 
 }
 template <typename T>
-void sd_al<T>::push_back(T element)
+void SDAL<T>::push_back(T element)
 {
     //check to make sure inputs aren't 0
     if (length() + 1 == size)
@@ -142,7 +142,7 @@ void sd_al<T>::push_back(T element)
     }
 }
 template <typename T>
-void sd_al<T>::push_front(T element)
+void SDAL<T>::push_front(T element)
 {
     //check to make sure inputs aren't 0
     if (length() + 1 == size)
@@ -155,7 +155,7 @@ void sd_al<T>::push_front(T element)
     data[0] = element;
 }
 template <typename T>
-T sd_al<T>::replace(T element, size_t position)
+T SDAL<T>::replace(T element, size_t position)
 {
     T replaced = 0;
     if(position == 0)
@@ -180,7 +180,7 @@ T sd_al<T>::replace(T element, size_t position)
     return replaced;
 }
 template <typename T>
-T sd_al<T>::remove(size_t position)
+T SDAL<T>::remove(size_t position)
 {
     T removed = 0;
     if(position == 0) //pop the front
@@ -211,7 +211,7 @@ T sd_al<T>::remove(size_t position)
     return removed;
 }
 template <typename T>
-T sd_al<T>::pop_back(void)
+T SDAL<T>::pop_back(void)
 {
     T popped = data[length() - 1];
     data[length() - 1 ] = 0;
@@ -224,7 +224,7 @@ T sd_al<T>::pop_back(void)
 
 }
 template <typename T>
-T sd_al<T>::pop_front(void)
+T SDAL<T>::pop_front(void)
 {
     T popped = data[0];
     data[0] = 0;
@@ -240,17 +240,17 @@ T sd_al<T>::pop_front(void)
     return popped;
 }
 template <typename T>
-T sd_al<T>::peek_back(void)
+T SDAL<T>::peek_back(void)
 {
     return data[length()-1];
 }
 template <typename T>
-T sd_al<T>::peek_front(void)
+T SDAL<T>::peek_front(void)
 {
     return data[0];
 }
 template <typename T>
-bool sd_al<T>::is_empty(void)
+bool SDAL<T>::is_empty(void)
 {
     bool emptiness = false;
     if(length() == 0)
@@ -258,7 +258,7 @@ bool sd_al<T>::is_empty(void)
     return emptiness;
 }
 template <typename T>
-bool sd_al<T>::is_full()
+bool SDAL<T>::is_full()
 {
     bool fullness = false;
     if(size == length())
@@ -266,9 +266,9 @@ bool sd_al<T>::is_full()
     return fullness;
 }
 template <typename T>
-size_t sd_al<T>::length(void)
+size_t SDAL<T>::length(void)
 {
-    //IT WORK
+    //TODO fix this! what about nodes of 0
 
     size_t counter = 0;
     for(int i = 0; i < size; ++i){
@@ -277,37 +277,38 @@ size_t sd_al<T>::length(void)
         }
         ++counter;
     }
+    return counter;
 }
 template <typename T>
-void sd_al<T>::clear(void)
+void SDAL<T>::clear(void)
 {
     for(int i = 0; i < size; ++i)
         data[i] = 0;
 }
 template <typename T>
-void sd_al<T>::contains( T element/*, bool &equals_function()*/)
+void SDAL<T>::contains( T element/*, bool &equals_function()*/)
 {
     //TODO
-
+    return;
 
 }
 template <typename T>
-T * sd_al<T>::contents()
+T * SDAL<T>::contents()
 {
     T * ptr = &data[0];
     return ptr;
 }
 
 template <typename T>
-void sd_al<T>::print()
+void SDAL<T>::print(std::ostream &os)
 {
-	std::cout << "Simple Dynamic Array List: ";
+    os << "Simple Dynamic Array List: ";
 	// loop while itr != null
 	for(int i = 0; i < size; ++i){
-            std::cout << data[i] << "->";
+            os << data[i] << "->";
     }
 
-    std::cout <<"\n";
+    os <<"\n";
 }
 
 // _____________
@@ -320,7 +321,7 @@ void sd_al<T>::print()
 //                ||     ||
 
 template <typename T>
-void sd_al<T>::allocate_array(void)
+void SDAL<T>::allocate_array(void)
 {
     T temp[size]; //temp array for storing variables
     size_t prev_size = size; //store the original size
@@ -340,7 +341,7 @@ void sd_al<T>::allocate_array(void)
 }
 
 template <typename T>
-void sd_al<T>::deallocate_array(void)
+void SDAL<T>::deallocate_array(void)
 {
     T temp[size]; //temp array for storing variables
     size_t prev_size = size; //store the original size

@@ -1,5 +1,5 @@
-//cd_al
-#include "adt_ll.h"
+//CDAL
+#include "List.h"
 #include <iostream>
 #include "node_cdal.h"
 #include <stdexcept>
@@ -14,11 +14,11 @@ using namespace cop3530;
 //                ||----w |
 //                ||     ||
 template <typename T>
-class cd_al : public adt_ll<T>
+class CDAL : public List<T>
 {
     public:
-        cd_al(int i);
-        ~ cd_al ();
+        CDAL(int i);
+        ~ CDAL ();
 
         void insert( T element, size_t position) override;
         void push_back(T element) override;
@@ -34,7 +34,7 @@ class cd_al : public adt_ll<T>
         size_t length(void) override;
         void clear(void) override;
         void contains( T element /*equals_function*/) override;
-        void print() override;
+        void print(std::ostream &os) override;
         T * contents() override;
         size_t node_ctr();
         void create_node(void);
@@ -52,14 +52,14 @@ class cd_al : public adt_ll<T>
 //  \___\___/|_| |_|___/\__|_|   \__,_|\___|\__\___/|_|
 
 template <typename T>
-cd_al<T>::cd_al(int i)
+CDAL<T>::CDAL(int i)
 {
     head = new Node_CDAL<T>;
     head->next = NULL;
     tail = 0;
 }
 template <typename T>
-cd_al<T>::~cd_al()
+CDAL<T>::~CDAL()
 {
     //TODO find out how to destroy linked list
     // bool finished = false;
@@ -81,7 +81,7 @@ cd_al<T>::~cd_al()
 //
 
 template <typename T>
-void cd_al<T>::insert(T element, size_t position)
+void CDAL<T>::insert(T element, size_t position)
 {
     // COMPLETE
     if(position == 0)
@@ -170,7 +170,7 @@ void cd_al<T>::insert(T element, size_t position)
     }
 }
 template <typename T>
-void cd_al<T>::push_back(T element)
+void CDAL<T>::push_back(T element)
 {
     //tail must be less than 50
     //item must be pushed to the first node, next nodes, and the last node,
@@ -220,7 +220,7 @@ void cd_al<T>::push_back(T element)
     ++tail;
 }
 template <typename T>
-void cd_al<T>::push_front(T element)
+void CDAL<T>::push_front(T element)
 {
     if(tail == 50)
     {
@@ -292,7 +292,7 @@ void cd_al<T>::push_front(T element)
     return;
 }
 template <typename T>
-T cd_al<T>::replace( T element, size_t position)
+T CDAL<T>::replace( T element, size_t position)
 {
     T replaced;
     if (position + 1 > length()){
@@ -339,7 +339,7 @@ T cd_al<T>::replace( T element, size_t position)
     return replaced;
 }
 template <typename T>
-T cd_al<T>::remove(size_t position)
+T CDAL<T>::remove(size_t position)
 {
     T removed = 0;
     if(position == 0)
@@ -418,7 +418,7 @@ T cd_al<T>::remove(size_t position)
     return removed;
 }
 template <typename T>
-T cd_al<T>::pop_back(void)
+T CDAL<T>::pop_back(void)
 {
     //TODO throw error if trying to pop an empty list
     T popped;
@@ -454,7 +454,7 @@ T cd_al<T>::pop_back(void)
 
 }
 template <typename T>
-T cd_al<T>::pop_front(void)
+T CDAL<T>::pop_front(void)
 {
     T popped = (head->data)[0];
 
@@ -517,7 +517,7 @@ T cd_al<T>::pop_front(void)
 
 }
 template <typename T>
-T cd_al<T>::peek_back(void)
+T CDAL<T>::peek_back(void)
 {
     Node_CDAL <T> * itr = head;
     T peeked = 0;
@@ -530,23 +530,23 @@ T cd_al<T>::peek_back(void)
     return peeked;
 }
 template <typename T>
-T cd_al<T>::peek_front(void)
+T CDAL<T>::peek_front(void)
 {
     T peeked = (head->data)[0];
     return peeked;
 }
 template <typename T>
-bool cd_al<T>::is_empty(void)
+bool CDAL<T>::is_empty(void)
 {
     return ((tail == 0) && (node_ctr() == 1));
 }
 template <typename T>
-bool cd_al<T>::is_full()
+bool CDAL<T>::is_full()
 {
     return (tail == 50);
 }
 template <typename T>
-size_t cd_al<T>::length(void)
+size_t CDAL<T>::length(void)
 {
     size_t length = 0;
     Node_CDAL <T> * itr = head;
@@ -566,7 +566,7 @@ size_t cd_al<T>::length(void)
 
 }
 template <typename T>
-void cd_al<T>::clear(void)
+void CDAL<T>::clear(void)
 {
 
     Node_CDAL <T> * itr = head;
@@ -583,7 +583,7 @@ void cd_al<T>::clear(void)
     return;
 }
 template <typename T>
-void cd_al<T>::contains( T element/*, bool &equals_function()*/)
+void CDAL<T>::contains( T element/*, bool &equals_function()*/)
 {
     //TODO
 
@@ -596,7 +596,7 @@ bool equals_function(T element1/*, T element2*/)
     // return element1 == element2;
 }
 template <typename T>
-T * cd_al<T>::contents()
+T * CDAL<T>::contents()
 {
     T * content_array = new T[node_ctr() * 50];
     Node_CDAL <T> * itr = head;
@@ -618,23 +618,23 @@ T * cd_al<T>::contents()
 }
 
 template <typename T>
-void cd_al<T>::print()
+void CDAL<T>::print(std::ostream &os)
 {
 	Node_CDAL <T> * itr = head;
 
-	std::cout << "Chained Dynamic Array List\n";
+	os << "Chained Dynamic Array List\n";
     unsigned int node_ctr = 1;
     while(itr){
-        std::cout << "Node " << node_ctr<<": ";
+        os << "Node " << node_ctr<<": ";
         for (int i = 0; i < 50; ++i){
-            std::cout << (itr->data)[i] << "->";
+            os << (itr->data)[i] << "->";
         }
-        std::cout << "\n";
+        os << "\n";
         itr = itr->next;
         node_ctr++;
     }
 
-    std::cout <<"\n";
+    os <<"\n";
 }
 // _____________
 // < helper fxns >
@@ -645,7 +645,7 @@ void cd_al<T>::print()
 //                ||----w |
 //                ||     ||
 template <typename T>
-size_t cd_al<T>::node_ctr(void)
+size_t CDAL<T>::node_ctr(void)
 {
     size_t ctr = 0;
     Node_CDAL <T> * itr = head;
@@ -658,7 +658,7 @@ size_t cd_al<T>::node_ctr(void)
 
 }
 template <typename T>
-void cd_al<T>::create_node(void)
+void CDAL<T>::create_node(void)
 {
     Node_CDAL <T> * new_node = new Node_CDAL<T>;
     Node_CDAL <T> * prev_node = new Node_CDAL<T>;

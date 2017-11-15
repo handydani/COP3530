@@ -1,14 +1,15 @@
-#include "ss_ll.h"
+#include "SSLL.h"
 #include <iostream>
 #include <stdexcept>
-#include "sd_al.h"
-#include "cd_al.h"
+#include "SDAL.h"
+#include "CDAL.h"
+#include "PSLL.h"
 using namespace cop3530;
 int main()
 {
 
     std::cout <<"Hello World" <<std::endl;
-    ss_ll<int> newList(0);
+    SSLL<int> newList(0);
 
     newList.insert(3, 0);
     newList.insert(2, 1);
@@ -80,7 +81,7 @@ int main()
     newList.clear();
     newList.print();
     std::cout << "This is now a simple dynamic array list"<<std::endl;
-    sd_al<int> newSDALList(10);
+    SDAL<int> newSDALList(10);
     newSDALList.push_back(1);
     newSDALList.push_back(2);
     newSDALList.push_back(3);
@@ -148,7 +149,7 @@ int main()
 
     std::cout << "------testing deallocation of list------"<<std::endl;
 
-    sd_al<int> deallSDALList(100);
+    SDAL<int> deallSDALList(100);
     deallSDALList.push_back(40);
     deallSDALList.push_back(41);
     deallSDALList.push_back(42);
@@ -167,11 +168,11 @@ int main()
     deallSDALList.print();
     // std::cout << "------testing deletion of list------"<<std::endl;
     // lol this wont work
-    // deallSDALList.~sd_al<int>();
+    // deallSDALList.~SDAL<int>();
 
 
     std::cout << "This is now a chained dynamic array list"<<std::endl;
-    cd_al<int> CDALList(0);
+    CDAL<int> CDALList(0);
 
     CDALList.print();
     std::cout << "------testing pushing back of list and dynamic resizing------"<<std::endl;
@@ -209,7 +210,7 @@ int main()
 
 
     std::cout << "------testing pushing to the front of the list------"<<std::endl;
-    cd_al<int> NewCDALList(0);
+    CDAL<int> NewCDALList(0);
 
     NewCDALList.push_back(1);
     NewCDALList.push_back(1);
@@ -372,5 +373,48 @@ int main()
     NewCDALList.print();
     NewCDALList.clear();
     NewCDALList.print();
+
+
+    std::cout << "This is now a Pool Singly Linked Lists\n";
+
+    PSLL<int> PSLList(0);
+    PSLList.print();
+    i = 1;
+    while(i != 20){
+        PSLList.push_front(i);
+        ++i;
+    }
+    PSLList.print();
+
+    std::cout << "~~~~~~~~~testing pushing to the front~~~~~~~~~\n";
+    PSLList.push_front(37);
+    PSLList.print();
+    std::cout << "~~~~~~~~~testing pushing to the back~~~~~~~~~\n";
+
+    PSLList.push_back(37);
+    PSLList.print();
+    std::cout << "~~~~~~~~~testing popping the back~~~~~~~~~\n";
+    PSLList.pop_back();
+    PSLList.print();
+    PSLList.clear();
+    PSLList.print();
+
+    PSLList.push_back(5);
+    PSLList.print();
+    std::cout << "~~~~~~~~~testing popping the front~~~~~~~~~\n";
+
+
+    PSLList.pop_front();
+    PSLList.print();
+    i = 1;
+    while(i != 20){
+        PSLList.push_front(i);
+        ++i;
+    }
+    PSLList.print();
+
+    PSLList.pop_front();
+    PSLList.print();
+
     return 0;
 }
