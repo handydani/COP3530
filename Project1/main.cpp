@@ -14,7 +14,7 @@ int main()
     newList.insert(3, 0);
     newList.insert(2, 1);
     newList.push_back(1);
-    newList.print();
+    newList.print(std::cout);
 
     std::cout << newList.peek_back() << "\n";
     std::cout << newList.peek_front() << "\n";
@@ -22,36 +22,36 @@ int main()
     std::cout << newList.length() << "\n";
     std::cout << newList.pop_front() << "\n";
     newList.push_back(5);
-    newList.print();
+    newList.print(std::cout);
     std::cout << newList.remove(1) << "\n";
-    newList.print();
+    newList.print(std::cout);
     std::cout << newList.length() << "\n";
 
     std::cout << newList.pop_back() << "\n";
     std::cout << newList.pop_back() << "\n";
     std::cout << newList.length() << "\n";
 
-    newList.print();
+    newList.print(std::cout);
     newList.push_back(1);
     newList.push_back(2);
     newList.push_back(3);
     newList.push_back(4);
     newList.push_back(5);
-    newList.print();
+    newList.print(std::cout);
     newList.insert(37, 0);
-    newList.print();
+    newList.print(std::cout);
 
     newList.insert(37, 2);
-    newList.print();
+    newList.print(std::cout);
 
     newList.insert(37, 4);
-    newList.print();
+    newList.print(std::cout);
 
     newList.insert(37, 6);
-    newList.print();
+    newList.print(std::cout);
 
     newList.insert(37, 8);
-    newList.print();
+    newList.print(std::cout);
 
     newList.replace(74, 0);
     newList.replace(74, 2);
@@ -67,9 +67,9 @@ int main()
 
     }
     newList.replace(37, 0);
-    newList.print();
+    newList.print(std::cout);
 
-    // this prints the contents of the list as an array
+    // this printsstd::cout the contents of the list as an array
     int * array_pointer;
     for(int i = 0; i < newList.length(); i++){
         array_pointer = newList.contents();
@@ -79,7 +79,7 @@ int main()
 
 
     newList.clear();
-    newList.print();
+    newList.print(std::cout);
     std::cout << "This is now a simple dynamic array list"<<std::endl;
     SDAL<int> newSDALList(10);
     newSDALList.push_back(1);
@@ -87,43 +87,43 @@ int main()
     newSDALList.push_back(3);
     newSDALList.push_back(4);
     newSDALList.push_front(5);
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     newSDALList.insert(6, 5);
     newSDALList.insert(12, 0);
     newSDALList.insert(2, 1);
 
-    newSDALList.print();
+    newSDALList.print(std::cout);
     std::cout << newSDALList.pop_back() << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << newSDALList.pop_front() << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << "testing remove list"<<std::endl;
 
     std::cout << newSDALList.remove(1) << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << newSDALList.remove(0) << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << newSDALList.remove(3) << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << "testing replace list"<<std::endl;
 
     std::cout << newSDALList.replace(37, 0) << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << newSDALList.replace(38, 1) << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << newSDALList.replace(39, 2) << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
     std::cout << newSDALList.replace(40, 3) << std::endl;
 
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << "------testing allocation of list------"<<std::endl;
 
@@ -133,17 +133,17 @@ int main()
     newSDALList.push_back(43);
     newSDALList.push_back(44);
     newSDALList.push_back(45);
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     std::cout << "The length of the list is " << newSDALList.length() << std::endl;
 
     newSDALList.push_back(46);
     std::cout << "The length of the list is " << newSDALList.length() << std::endl;
-    newSDALList.print();
+    newSDALList.print(std::cout);
 
     newSDALList.push_back(47);
 
-    newSDALList.print();
+    newSDALList.print(std::cout);
     std::cout << "The length of the list is " << newSDALList.length() << std::endl;
 
 
@@ -156,16 +156,16 @@ int main()
     deallSDALList.push_back(43);
     deallSDALList.push_back(44);
     deallSDALList.push_back(45);
-    deallSDALList.print();
+    deallSDALList.print(std::cout);
 
     std::cout << "The length of the list is " << deallSDALList.length() << std::endl;
     deallSDALList.pop_back();
-    deallSDALList.print();
+    deallSDALList.print(std::cout);
 
     std::cout << "------testing clearing of list------"<<std::endl;
 
     deallSDALList.clear();
-    deallSDALList.print();
+    deallSDALList.print(std::cout);
     // std::cout << "------testing deletion of list------"<<std::endl;
     // lol this wont work
     // deallSDALList.~SDAL<int>();
@@ -174,7 +174,7 @@ int main()
     std::cout << "This is now a chained dynamic array list"<<std::endl;
     CDAL<int> CDALList(0);
 
-    CDALList.print();
+    CDALList.print(std::cout);
     std::cout << "------testing pushing back of list and dynamic resizing------"<<std::endl;
 
     int i = 0;
@@ -182,7 +182,7 @@ int main()
         CDALList.push_back(i);
         i++;
     }
-    CDALList.print();
+    CDALList.print(std::cout);
     std::cout << CDALList.length()<<"\n";
     std::cout << CDALList.node_ctr()<<"\n";
 
@@ -191,7 +191,7 @@ int main()
         CDALList.push_back(i);
         i++;
     }
-    CDALList.print();
+    CDALList.print(std::cout);
 
 
     i = 100;
@@ -199,14 +199,14 @@ int main()
         CDALList.push_back(i);
         i++;
     }
-    CDALList.print();
+    CDALList.print(std::cout);
     std::cout << CDALList.length()<<"\n";
     std::cout << CDALList.node_ctr()<<"\n";
 
     std::cout << "------testing clearing of list------"<<std::endl;
 
     CDALList.clear();
-    CDALList.print();
+    CDALList.print(std::cout);
 
 
     std::cout << "------testing pushing to the front of the list------"<<std::endl;
@@ -217,7 +217,7 @@ int main()
     NewCDALList.push_back(1);
     NewCDALList.push_back(1);
     NewCDALList.push_back(1);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.push_front(2);
 
     NewCDALList.push_front(3);
@@ -225,12 +225,12 @@ int main()
     NewCDALList.push_front(4);
 
     NewCDALList.push_front(5);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.push_front(3);
     NewCDALList.push_front(3);
     NewCDALList.push_front(3);
     NewCDALList.push_front(3);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     i = 0;
     while(i != 86){
@@ -239,7 +239,7 @@ int main()
     }
     NewCDALList.push_front(5);
     NewCDALList.push_front(5);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
 
     std::cout << "------testing the length of the list------"<<std::endl;
@@ -254,81 +254,81 @@ int main()
         NewCDALList.push_back(i);
         i++;
     }
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.pop_back();
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     while(i != 75){
         NewCDALList.push_back(i);
         i++;
     }
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     NewCDALList.pop_back();
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
 
     std::cout << "------testing popping the front of the list------"<<std::endl;
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.pop_front();
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     i = 0;
     while(i != 21){
         NewCDALList.pop_front();
         i++;
     }
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.pop_front();
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.pop_front();
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     NewCDALList.push_back(37);
     NewCDALList.push_back(37);
     NewCDALList.push_back(37);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     std::cout << "------testing insertion of the list------"<<std::endl;
     NewCDALList.insert(37, 4);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.insert(37, 0);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.insert(100, 53);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     i = 0;
     while(i != 45){
         NewCDALList.push_back(i);
         i++;
     }
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.insert(74, 20);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.insert(74, 100);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.insert(100, 0);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     std::cout << "------testing removal of the list------"<<std::endl;
     NewCDALList.remove(0);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     std::cout <<"the length is " << NewCDALList.length()<<"\n";
     NewCDALList.remove(NewCDALList.length()-1);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     std::cout <<"the length is " << NewCDALList.length()<<"\n";
 
     NewCDALList.remove(5);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     std::cout <<"the length is " << NewCDALList.length()<<"\n";
     std::cout << "------testing replacement of the list------"<<std::endl;
 
     NewCDALList.replace(100, 0);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     NewCDALList.replace(100, 25);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     NewCDALList.replace(100, NewCDALList.length()-1);
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
     std::cout << "------testing peeking of the list------"<<std::endl;
 
@@ -370,51 +370,53 @@ int main()
     }
     std::cout <<"the length is "<< NewCDALList.length();
     std::cout <<"\n";
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
     NewCDALList.clear();
-    NewCDALList.print();
+    NewCDALList.print(std::cout);
 
 
     std::cout << "This is now a Pool Singly Linked Lists\n";
 
     PSLL<int> PSLList(0);
-    PSLList.print();
+    PSLList.print(std::cout);
     i = 1;
     while(i != 20){
         PSLList.push_front(i);
         ++i;
     }
-    PSLList.print();
+    PSLList.print(std::cout);
 
     std::cout << "~~~~~~~~~testing pushing to the front~~~~~~~~~\n";
     PSLList.push_front(37);
-    PSLList.print();
+    PSLList.print(std::cout);
     std::cout << "~~~~~~~~~testing pushing to the back~~~~~~~~~\n";
 
     PSLList.push_back(37);
-    PSLList.print();
+    PSLList.print(std::cout);
     std::cout << "~~~~~~~~~testing popping the back~~~~~~~~~\n";
     PSLList.pop_back();
-    PSLList.print();
+    PSLList.print(std::cout);
     PSLList.clear();
-    PSLList.print();
+    PSLList.print(std::cout);
 
     PSLList.push_back(5);
-    PSLList.print();
+    PSLList.print(std::cout);
     std::cout << "~~~~~~~~~testing popping the front~~~~~~~~~\n";
 
 
     PSLList.pop_front();
-    PSLList.print();
+    PSLList.print(std::cout);
     i = 1;
     while(i != 20){
         PSLList.push_front(i);
         ++i;
     }
-    PSLList.print();
+    PSLList.print(std::cout);
 
     PSLList.pop_front();
-    PSLList.print();
+    PSLList.print(std::cout);
+    PSLList.pop_front();
+    PSLList.print(std::cout);
 
     return 0;
 }

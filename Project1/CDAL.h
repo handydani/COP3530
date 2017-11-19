@@ -27,6 +27,7 @@ class CDAL : public List<T>
         T remove(size_t position) override;
         T pop_back(void) override;
         T pop_front(void) override;
+        T item_at(size_t position) override;
         T peek_back(void) override;
         T peek_front(void) override;
         bool is_empty(void) override;
@@ -517,6 +518,10 @@ T CDAL<T>::pop_front(void)
 
 }
 template <typename T>
+T CDAL<T>::item_at(size_t position){
+
+}
+template <typename T>
 T CDAL<T>::peek_back(void)
 {
     Node_CDAL <T> * itr = head;
@@ -621,20 +626,24 @@ template <typename T>
 void CDAL<T>::print(std::ostream &os)
 {
 	Node_CDAL <T> * itr = head;
+    if(!length()){
+        os << "<empty list>\n";
+        return;
+    }
+    os << "[";
 
-	os << "Chained Dynamic Array List\n";
     unsigned int node_ctr = 1;
     while(itr){
-        os << "Node " << node_ctr<<": ";
+        // os << "Node " << node_ctr<<": ";
         for (int i = 0; i < 50; ++i){
-            os << (itr->data)[i] << "->";
+            os << (itr->data)[i] << ",";
         }
-        os << "\n";
+        // os << "\n";
         itr = itr->next;
         node_ctr++;
     }
 
-    os <<"\n";
+    os <<"]\n";
 }
 // _____________
 // < helper fxns >

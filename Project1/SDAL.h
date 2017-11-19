@@ -27,6 +27,7 @@ class SDAL : public List<T>
         T remove(size_t position) override;
         T pop_back(void) override;
         T pop_front(void) override;
+        T item_at(size_t position) override;
         T peek_back(void) override;
         T peek_front(void) override;
         bool is_empty(void) override;
@@ -240,6 +241,21 @@ T SDAL<T>::pop_front(void)
     return popped;
 }
 template <typename T>
+T SDAL<T>::item_at(size_t position)
+{
+    T item = 0;
+
+    if(position < size){
+        item = data[position];
+    }
+    else{
+        //throw error
+    }
+
+    return item;
+}
+
+template <typename T>
 T SDAL<T>::peek_back(void)
 {
     return data[length()-1];
@@ -302,13 +318,18 @@ T * SDAL<T>::contents()
 template <typename T>
 void SDAL<T>::print(std::ostream &os)
 {
-    os << "Simple Dynamic Array List: ";
+
+    if(!length()){
+        os << "<empty list>\n";
+        return;
+    }
 	// loop while itr != null
+    os << "[";
 	for(int i = 0; i < size; ++i){
-            os << data[i] << "->";
+            os << data[i] << ",";
     }
 
-    os <<"\n";
+    os <<"]\n";
 }
 
 // _____________

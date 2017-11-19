@@ -17,7 +17,7 @@ template <typename T>
 class SSLL : public List<T>
 {
     public:
-        SSLL(void);
+        SSLL(int i);
         SSLL(const SSLL&); //copy contructor
         SSLL& operator =(const SSLL&); //copy assignment operator
         //move constructor
@@ -58,7 +58,7 @@ class SSLL : public List<T>
 //  \___\___/|_| |_|___/\__|_|   \__,_|\___|\__\___/|_|
 
 template <typename T>
-SSLL<T>::SSLL(void)
+SSLL<T>::SSLL(int i)
 {
     head = new Node<T>;
     tail = new Node<T>;
@@ -456,14 +456,17 @@ void SSLL<T>::print(std::ostream &os)
     //COMPLETE
 	//temp ptr for itr
 	Node <T> * itr = head->next;
-
-	os << "Simple Singly Linked List: ";
+    if(!head->next){
+        os << "<empty list>\n";
+        return;
+    }
+    os << "[";
 	// loop while itr != null
 	while (itr)
     {
-		os << itr->data << "->";
+		os << itr->data << ",";
 		itr = itr->next;
     }
-    os <<"\n";
+    os << "]\n";
 }
 }

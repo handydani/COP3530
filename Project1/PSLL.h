@@ -27,6 +27,7 @@ public:
     T remove(size_t position) override;
     T pop_back(void) override;
     T pop_front(void) override;
+    T item_at(size_t position) override;
     T peek_back(void) override;
     T peek_front(void) override;
     bool is_empty(void) override;
@@ -316,21 +317,36 @@ The free list: 5->
 Pool Singly Linked List:
 The free list: 19->
     */
+
+    //
     T popped;
-    Node <T> * first_node = new Node<T>;
-
-    first_node = head->next;
-    while(free_list->next){
-        free_list = free_list->next;
-    }
-    first_node->next = nullptr;
-    free_list->next = first_node;
-
+    Node <T> * first_node = head->next;
     popped = first_node->data;
 
-    head->next = first_node->next;
+    head->next = head->next->next;
+
+    if(!free_list->next->next){ //if there are no nodes to grab from free_list
+        free_list->next->next = first_node;
+        first_node->next = nullptr;
+    }
+    else{
+        while(free_list->next != nullptr){
+            free_list = free_list->next;
+        }
+        free_list->next = first_node;
+        free_list->next->next = nullptr;
+    }
+
+    // // first_node->next = nullptr;
+    //
+    // free_list->next = first_node;
+    // free_list->next->next = nullptr;
 
     return popped;
+
+}
+template <typename T>
+T PSLL<T>::item_at(size_t position){
 
 }
 template <typename T>

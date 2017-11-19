@@ -9,6 +9,9 @@
     - can there be duplicates?
     - max input size?
     - int, double, char, templates
+    - can i destroy or modify the array
+    - can i use add. space
+    - will the array ever be empty
 - brute force
     - state that its brute force and acknowledge
     - might not be the most elegant solution but it works
