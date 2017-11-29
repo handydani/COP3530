@@ -1,0 +1,17 @@
+Map/Dictionary: a collection of key, value pairs
+
+ADT
+insert(key, value)
+remove(key)
+search(key)
+
+expected length of each chain = n/m = d = load factor
+O(1 + d) = search
+
+
+Hash functions:
+
+1) h(k) = k % m // k is key, m is
+2) h(k) = [(a*k)mod 2^w] >> w-r // given some key, give us a more random better distribution
+            //first we have our key, random integer a, and multiply them
+            //

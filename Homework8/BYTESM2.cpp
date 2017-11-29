@@ -2,7 +2,18 @@
 #include <vector>
 #include <string>
 using namespace std;
-int main(){
+int max(int a, int b, int c);
+// void print( int tiles[][]);
+int max(int a, int b, int c)
+{
+    int m = a;
+    if(b > m) m = b;
+    if(c > m) m = c;
+    return m;
+}
+
+int main()
+{
     vector<string> inputs;
 
     int testcases = 0;
@@ -10,37 +21,48 @@ int main(){
     int cols = 0;
     cin >> testcases;
 
-    while(testcases){
+    while(testcases)
+    {
         cin >> rows;
         cin >> cols;
+        cols += 2; // 0 buffers on the left and right
 
         int tiles[rows][cols];
-        int stones[rows];
 
-        for (int n=0; n<rows; n++)
-        {
-            for (int m=0; m<cols; m++)
-            {
-              cin >> tiles[n][m];
+        //INITIALIZE THE ARRAY WITH CONTENTS AND WITH THE BUFFER
+        for (int n=0; n<rows; n++){
+            for (int m=0; m<cols; m++){
+                if(m == 0 || m == cols - 1)// 0 buffers on the left and right
+                    tiles[n][m] = 0;
+                else cin >> tiles[n][m];
             }
         }
-        // getline(cin, temp);
-        // inputs.push_back(temp);
+
+        //PRINT
+        // for (int n=0; n<rows; n++){
+        //     for (int m=0; m<cols; m++)
+        //         cout << tiles[n][m] << " ";
+        //     cout << "\n";
+        // }
+        for(int i = rows - 2; i >= 0; --i){
+            for(int j = 1; j < cols - 1; ++j){
+                tiles[i][j] += max(tiles[i+1][j-1], tiles[i+1][j], tiles[i+1][j+1]);
+            }
+        }
+        //PRINT
+        // for (int n=0; n<rows; n++){
+        //     for (int m=0; m<cols; m++)
+        //         cout << tiles[n][m] << " ";
+        //     cout << "\n";
+        // }
         int max = -1;
-        //find the largest num in the first row
-        for (int m=0; m<cols; m++)
-        {
-            if(tiles[0][m] > max)
-                max = tiles[0][m];
+        for( int i = 0; i< cols; ++ i){
+            if(tiles[0][i] > max)
+                max = tiles[0][i];
         }
 
-        for (int n=0; n<rows; n++)
-        {
-            for (int m=0; m<cols; m++)
-            {
-              stones[n];
-            }
-        }
+        cout << max <<"\n";
+
         --testcases;
     }
 
