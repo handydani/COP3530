@@ -14,8 +14,6 @@ int max(int a, int b, int c)
 
 int main()
 {
-    vector<string> inputs;
-
     int testcases = 0;
     int rows = 0;
     int cols = 0;
