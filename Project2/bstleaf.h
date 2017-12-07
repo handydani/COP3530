@@ -130,7 +130,7 @@ namespace cop3530
     template <typename K, typename V, bool (*C) (K, K), bool (*E) (K, K)>
     void bstleaf<K,V,C,E>::print()
     {
-        std::stack<Node<K,V>> stack;
+        std::stack<Node<K,V> > stack;
         Node <K,V> curr = root;
         bool done = false;
 
