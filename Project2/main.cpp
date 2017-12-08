@@ -30,17 +30,13 @@ int main()
         B      E
       /   \       \
     A       C      F
+/   \    /   \   /  \
+
+
     */
     bst.print();
 
 
-//    bst.insert(2, 'B');
-//    bst.insert(-2, 'C');
-//    bst.insert(3, 'D');
-//    std::cout << "insertion of tree successful\n";
-//
-//    bst.print();
-//    std::cout << "printing of tree successful\n";
 
     return 0;
 }
