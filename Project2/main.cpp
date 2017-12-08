@@ -17,14 +17,20 @@ int main()
 {
 //    Node<int, char> bst_root;
     bstleaf<int, char, compare, equal> bst;
-    std::cout << "creation of tree successful\n";
     bst.insert(1, 'D');
     bst.insert(-2, 'B');
     bst.insert(-3, 'A');
     bst.insert(-1, 'C');
-    bst.insert(3, 'E');
-    bst.insert(2, 'F');
+    bst.insert(2, 'E');
+    bst.insert(3, 'F');
+    /*
 
+            D
+           / \
+        B      E
+      /   \       \
+    A       C      F
+    */
     bst.print();
 
 

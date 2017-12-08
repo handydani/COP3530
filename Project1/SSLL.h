@@ -90,8 +90,6 @@ SSLL<T>::~SSLL()
        free(temp);
        temp = next;
    }
-
-
 }
 
 //   __                  _   _
