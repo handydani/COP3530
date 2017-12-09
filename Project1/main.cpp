@@ -4,6 +4,7 @@
 #include "SDAL.h"
 #include "CDAL.h"
 #include "PSLL.h"
+#include "CBL.h"
 using namespace cop3530;
 int main()
 {
@@ -195,6 +196,7 @@ int main()
 
 
     i = 100;
+
     while(i != 150){
         CDALList.push_back(i);
         i++;
@@ -403,20 +405,112 @@ int main()
     PSLList.print(std::cout);
     std::cout << "~~~~~~~~~testing popping the front~~~~~~~~~\n";
 
+    //
+    // PSLList.pop_front();
+    // PSLList.print(std::cout);
+    // i = 1;
+    // while(i != 20){
+    //     PSLList.push_front(i);
+    //     ++i;
+    // }
+    // PSLList.print(std::cout);
+    //
+    // PSLList.pop_front();
+    // PSLList.print(std::cout);
+    // PSLList.pop_front();
+    // PSLList.print(std::cout);
 
-    PSLList.pop_front();
-    PSLList.print(std::cout);
-    i = 1;
-    while(i != 20){
-        PSLList.push_front(i);
-        ++i;
-    }
-    PSLList.print(std::cout);
+    std::cout << "~~~~~~~~~Now testing CBL~~~~~~~~~\n";
+    CBL<int> CBLList(10);
+    CBLList.push_back(1);
+    CBLList.push_back(2);
+    CBLList.push_back(3);
+    CBLList.push_back(4);
+    CBLList.print(std::cout);
 
-    PSLList.pop_front();
-    PSLList.print(std::cout);
-    PSLList.pop_front();
-    PSLList.print(std::cout);
+    // CBLList.insert(6, 5);
+    // CBLList.insert(12, 0);
+    // CBLList.insert(2, 1);
+
+    // CBLList.print(std::cout);
+    std::cout << CBLList.pop_back() << std::endl;
+    CBLList.print(std::cout);
+
+    // std::cout << CBLList.pop_front() << std::endl;
+    // CBLList.print(std::cout);
+
+    // std::cout << "testing remove list"<<std::endl;
+    //
+    // std::cout << CBLList.remove(1) << std::endl;
+    // CBLList.print(std::cout);
+    //
+    // std::cout << CBLList.remove(0) << std::endl;
+    // CBLList.print(std::cout);
+    //
+    // std::cout << CBLList.remove(3) << std::endl;
+    // CBLList.print(std::cout);
+    //
+    // std::cout << "testing replace list"<<std::endl;
+
+    // std::cout << CBLList.replace(37, 0) << std::endl;
+    // CBLList.print(std::cout);
+    //
+    // std::cout << CBLList.replace(38, 1) << std::endl;
+    // CBLList.print(std::cout);
+    //
+    // std::cout << CBLList.replace(39, 2) << std::endl;
+    // CBLList.print(std::cout);
+    // std::cout << CBLList.replace(40, 3) << std::endl;
+    //
+    // CBLList.print(std::cout);
+
+    std::cout << "------testing allocation of list------"<<std::endl;
+
+    CBLList.push_back(40);
+    CBLList.push_back(41);
+    CBLList.push_back(42);
+    CBLList.push_back(43);
+    CBLList.push_back(44);
+    CBLList.push_back(45);
+    CBLList.print(std::cout);
+
+    std::cout << "The length of the list is " << CBLList.length() << std::endl;
+
+    CBLList.push_back(46);
+    std::cout << "The length of the list is " << CBLList.length() << std::endl;
+    CBLList.print(std::cout);
+
+    CBLList.push_back(47);
+
+    CBLList.print(std::cout);
+    std::cout << "The length of the list is " << CBLList.length() << std::endl;
+
+
+    // std::cout << "------testing deallocation of list------"<<std::endl;
+    //
+    // SDAL<int> deallSDALList(100);
+    // deallSDALList.push_back(40);
+    // deallSDALList.push_back(41);
+    // deallSDALList.push_back(42);
+    // deallSDALList.push_back(43);
+    // deallSDALList.push_back(44);
+    // deallSDALList.push_back(45);
+    // deallSDALList.print(std::cout);
+    //
+    // std::cout << "The length of the list is " << deallSDALList.length() << std::endl;
+    // deallSDALList.pop_back();
+    // deallSDALList.print(std::cout);
+    //
+    // std::cout << "------testing clearing of list------"<<std::endl;
+    //
+    // deallSDALList.clear();
+    // deallSDALList.print(std::cout);
+    // // std::cout << "------testing deletion of list------"<<std::endl;
+    // // lol this wont work
+    // // deallSDALList.~SDAL<int>();
+    //
 
     return 0;
+
+
 }

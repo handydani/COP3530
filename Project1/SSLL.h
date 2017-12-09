@@ -287,6 +287,13 @@ template <typename T>
 T SSLL<T>::pop_back(void)
 {
     //COMPLETE
+    if(!length()){
+
+        std::domain_error d("The position requested does not exist");
+        throw d;
+
+    }
+
     T popped;
     Node <T> * last_node = new Node<T>;
     Node <T> * prev_node = new Node<T>;
@@ -317,6 +324,11 @@ template <typename T>
 T SSLL<T>::pop_front(void)
 {
     //COMPLETE
+    if(!length()){
+        std::domain_error d("The position requested does not exist");
+        throw d;
+    }
+
     T popped;
     Node <T> * first_node = new Node<T>;
 
@@ -333,6 +345,8 @@ T SSLL<T>::item_at(size_t position)
 {
 	//iterate through list until you get to a position
 	//TODO throw error if it's not there
+    if(!position) return head->data;
+
 	Node <T> * itr = head->next;
 	T item = 0;
 	while (itr->next)
@@ -462,9 +476,49 @@ void SSLL<T>::print(std::ostream &os)
 	// loop while itr != null
 	while (itr)
     {
-		os << itr->data << ",";
+		os << itr->data;
 		itr = itr->next;
+        if(itr)
+            os << ",";
     }
     os << "]\n";
 }
+
+// template <typename DataT>
+// class SSLL_Iter
+// {
+// public:
+//   // type aliases required for C++ iterator compatibility
+//   using value_type = DataT;
+//   using reference = DataT&;
+//   using pointer = DataT*;
+//   using difference_type = std::ptrdiff_t;
+//   using iterator_category = std::forward_iterator_tag;
+//
+//   // type aliases for prettier code
+//   using self_type = SSLL_Iter;
+//   using self_reference = SSLL_Iter&;
+//
+// private:
+//   Node* here;
+//
+// public:
+//   explicit SSLL_Iter( Node* start = nullptr ) : here( start ) {}
+//   SSLL_Iter( const SSLL_Iter& src ) : here( src.here ) {}
+//
+//   reference operator*() const {}
+//   pointer operator->() const {}
+//
+//   self_reference operator=( SSLL_Iter<DataT> const& src ) {}
+//
+//   self_reference operator++() {} // preincrement
+//
+//   self_type operator++(int) {} // postincrement
+//
+//   bool operator==( SSLL_Iter<DataT> const& rhs ) const {}
+//   bool operator!=( SSLL_Iter<DataT> const& rhs) const {}
+//   }
+// }; // end SSLL_Iter
+
+
 }

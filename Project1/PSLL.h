@@ -4,7 +4,8 @@
 #include <iostream>
 // cop3530::PSLL<E>::PSLL(const size_t init_pool = 50) :
 // pool_size(init_pool){//constructor stuff}
-using namespace cop3530;
+namespace cop3530
+{
 // _________________________
 // < pool singly linked list >
 // -------------------------
@@ -279,7 +280,7 @@ T PSLL<T>::remove(size_t position)
         removed = itr->data;
         prev->next = itr->next;
         itr->next = nullptr;
-        itr->data = NULL;
+        itr->data = 0;
         delete itr;
     }
     return removed;
@@ -347,7 +348,8 @@ The free list: 19->
 }
 template <typename T>
 T PSLL<T>::item_at(size_t position){
-
+    T value = 0;
+    return value;
 }
 template <typename T>
 T PSLL<T>::peek_back(void)
@@ -492,3 +494,4 @@ void PSLL<T>::print(std::ostream &os)
 //            (__)\       )\/\
 //                ||----w |
 //                ||     ||
+}

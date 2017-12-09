@@ -4,7 +4,8 @@
 #include "node_cdal.h"
 #include <stdexcept>
 
-using namespace cop3530;
+namespace cop3530
+{
 // _______________________________
 // < chained dynamic array list >
 // -------------------------------
@@ -520,6 +521,7 @@ T CDAL<T>::pop_front(void)
 template <typename T>
 T CDAL<T>::item_at(size_t position){
 
+return head->data[position];
 }
 template <typename T>
 T CDAL<T>::peek_back(void)
@@ -699,4 +701,5 @@ void CDAL<T>::create_node(void)
     new_node->next = nullptr;
 
     tail = 0;
+}
 }

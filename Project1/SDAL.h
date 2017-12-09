@@ -3,7 +3,8 @@
 #include <iostream>
 #include "node.h"
 #include <stdexcept>
-using namespace cop3530;
+namespace cop3530
+{
 // ___________________________
 // < simple dynamic array list >
 // ---------------------------
@@ -287,10 +288,7 @@ size_t SDAL<T>::length(void)
     //TODO fix this! what about nodes of 0
 
     size_t counter = 0;
-    for(int i = 0; i < size; ++i){
-        if(data[i] == 0){
-            return counter;
-        }
+    while(counter != tail){
         ++counter;
     }
     return counter;
@@ -320,16 +318,16 @@ void SDAL<T>::print(std::ostream &os)
 {
 
     if(!length()){
-        os << "<empty list>\n";
+        std::cout << "<empty list>\n";
         return;
     }
 	// loop while itr != null
-    os << "[";
+    std::cout << "[";
 	for(int i = 0; i < size; ++i){
-            os << data[i] << ",";
+            std::cout << data[i] << ",";
     }
 
-    os <<"]\n";
+    std::cout <<"]\n";
 }
 
 // _____________
@@ -384,4 +382,5 @@ void SDAL<T>::deallocate_array(void)
         data[i] = 0;
     }
 
+}
 }
